@@ -1,0 +1,17 @@
+$input-height: 24px;
+.el-input{
+  width: 150px;
+  .el-input__inner{
+    border-radius: $input-height / 2 !important;
+    border: none !important;
+    background: #454545;
+    height: $input-height !important;
+    line-height: $input-height !important;
+    &:focus{
+      background: #3a3a3a !important;
+    }
+  }
+  .el-input__icon{
+    line-height: $input-height + 2px !important;
+  }
+}
