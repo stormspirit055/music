@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Notification } from 'element-ui'
 export const request = createBaseInstance()
 function createBaseInstance() {
   const instance = axios.create({
@@ -10,13 +11,23 @@ function createBaseInstance() {
     console.log(error)
   })
   instance.interceptors.response.use((data) => {
-    data = data.data
-    if (data.code === 200) {
-      return data.result
+    if (data.status === 200 && data.data.code == 200) {
+      return Promise.resolve(data.data)
+    } else {
+      Notification({
+        title: '提示',
+        message: data.data.message,
+        type: 'error'
+      })
     }
-    console.log(data)
   }, error => {
-    console.log(error)
+    console.log(error.response)
+    Notification({
+      title: '提示',
+      message: error.response.data.message,
+      type: 'error'
+    })
+    return Promise.reject(error.response)
   })
   return instance
 }

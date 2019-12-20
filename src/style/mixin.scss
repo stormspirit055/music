@@ -9,3 +9,16 @@
   align-items: center;
   justify-content: center;
 }
+@mixin limit-line($line) {
+  -webkit-line-clamp: $line;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all; 
+  -webkit-box-orient: vertical;
+}
+@mixin text-vertical-center($height) {
+  line-height: $height;
+  height: $height;
+  font-size: $height;
+}

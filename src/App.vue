@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div>
+  <div id='app'>
     <Layout />
   </div>
 </template>
@@ -25,4 +25,7 @@ export default {
 }
 </script>
 <style>
+#app {
+  height: 100%;
+}
 </style>

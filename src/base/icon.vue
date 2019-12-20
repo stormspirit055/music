@@ -26,19 +26,19 @@ export default {
   methods: {
     getIconClass() {
       let iconClass = 'iconfont icon-' + this.type
+      if (this.color) {
+        iconClass += ` ${this.color}`
+      } else {
+        iconClass += ' default'
+      }
       return iconClass
     },
     getIconStyle() {
       let iconStyle = `font-size: ${toRem(this.size)};`
-      console.log(this.size)
       if (this.size < 12) {
         let radio = this.size / 12
         iconStyle += `transform: scale(${radio})`
       }
-      if (this.color) {
-        iconStyle += `color: ${this.color}`
-      }
-      console.log(iconStyle)
       return iconStyle
     }
   }
@@ -46,4 +46,9 @@ export default {
 
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
+.iconfont{
+  &.default{
+    color: #606060;
+  }
+}
 </style>

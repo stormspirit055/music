@@ -17,7 +17,7 @@ export default {
   components: {},
 
   computed: {},
-
+  
   mounted(){
     search().then(res => {
       console.log(res)

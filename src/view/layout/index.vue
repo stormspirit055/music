@@ -33,4 +33,12 @@ export default {
 
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
+.layout-wrap{
+  height: 100%;
+  .w-body{
+    display: flex;
+    position: relative;
+    height: calc(100% - #{$layout-header-height});
+  }
+}
 </style>

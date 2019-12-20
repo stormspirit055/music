@@ -16,12 +16,14 @@
      </div>
      <div class="w-right">
        <div class="r-router">
-         {{$route.meta.title}}
+          <div class="r-item" :class='currentIndex == index ? "active" : "default"' v-for='(item, index) in routerList' :key='index'>
+            {{item}}
+          </div>
        </div>
        <div class="r-search">
         <el-input
-          placeholder="请输入内容"
           prefix-icon="el-icon-search"
+          class='el-input-search'
           v-model="keywords">
         </el-input>
        </div>
@@ -37,13 +39,17 @@
        routeHasNext: false,
        routeHasPrev: true,
        keywords: '',
-       routerList: []
+       currentIndex: 0
      };
    },
  
    components: {Icon},
  
-   computed: {},
+   computed: {
+     routerList() {
+       return ['个性推荐', '歌单', '主播电台']
+     }
+   },
  
    mounted(){
      console.log(this.$route)
@@ -117,6 +123,19 @@
      justify-content: space-between;
      .r-router{
        display: flex;
+       .r-item{
+         font-size: 14px;
+         margin-right: 20px;
+         &:nth-last-child(1) {
+           margin-right: 0;
+         }
+         &.active{
+           color: #eee;
+         }
+         &.default{
+           color: $grey;
+         }
+       }
      }
    }
  }

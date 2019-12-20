@@ -1,5 +1,5 @@
 $input-height: 24px;
-.el-input{
+.el-input-search{
   width: 150px;
   .el-input__inner{
     border-radius: $input-height / 2 !important;
@@ -7,11 +7,44 @@ $input-height: 24px;
     background: #454545;
     height: $input-height !important;
     line-height: $input-height !important;
+    color: #bbb !important;
     &:focus{
       background: #3a3a3a !important;
     }
   }
   .el-input__icon{
-    line-height: $input-height + 2px !important;
+    line-height: $input-height !important;
   }
+}
+$input-height-login: 34px;
+.el-input-login{
+  width: 250px;
+  margin-bottom: 20px;
+  .el-input__inner{
+    border-radius: 4px !important;
+    background: #fff;
+    height: $input-height-login !important;
+    line-height: $input-height-login !important;
+    color: #333 !important;
+    &:focus {
+      border-color: $red !important;
+    }
+    &.danger {
+      border-color: $red !important;
+    }
+  }
+  &:nth-last-child(1){
+    margin-bottom: 0;
+  }
+}
+.el-dialog__wrapper{
+  .el-dialog{
+    border-radius: 6px !important;
+  }
+}
+.el-button {
+  border: none !important;
+  color: #fff !important;
+  background: $red !important;
+  border-radius: 2px !important;
 }
