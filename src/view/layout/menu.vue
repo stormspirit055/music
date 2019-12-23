@@ -17,7 +17,7 @@
 <script>
 import User from '@/components/user'
 import { menuRoutes } from '@/router'
-import { mapGetters } from 'vuex'
+import { mapGetters } from '@/store/helper/user'
 export default {
   data () {
     return {
@@ -54,8 +54,9 @@ export default {
   background: #1d1d1d;
   padding-top: 10px;
   width: $menu-side-width;
+  min-width: $menu-side-width;
   position: relative;
-  height: 100%;
+  height:  calc(100% - #{$mini-player-height});
   .w-block{
     margin-top: 15px;
     .b-title{
@@ -78,6 +79,13 @@ export default {
       margin-right: 6px;
     }
    } 
+   .b-item-acitve{
+     color: $red !important;
+     background: #2a2a2a !important;
+     i{
+       color: $red !important;
+     }
+   }
   }
 }
 </style>

@@ -4,6 +4,9 @@ import {
   Input,
   Dialog,
   Loading,
+  Carousel,
+  CarouselItem,
+  Image
 } from 'element-ui';
 import * as utils from '@/utils'
 export default {
@@ -25,6 +28,9 @@ export default {
     Vue.use(Input)
     Vue.use(Dialog)
     Vue.use(Loading)
+    Vue.use(Carousel)
+    Vue.use(CarouselItem)
+    Vue.use(Image)
     Vue.prototype.$ELEMENT = { size: "small" }
     Vue.prototype.$utils = utils
   },

@@ -3,7 +3,8 @@ import { Notification } from 'element-ui'
 export const request = createBaseInstance()
 function createBaseInstance() {
   const instance = axios.create({
-    baseURL: 'http://47.98.146.129:3000/',
+    baseURL: '/netease-api',
+    withCredentials: true
   })
   instance.interceptors.request.use((config) => {
     return config
@@ -21,13 +22,15 @@ function createBaseInstance() {
       })
     }
   }, error => {
+    console.log('chuowu ')
     console.log(error.response)
     Notification({
       title: '提示',
-      message: error.response.data.message,
+      message: error.response.data.msg ||  error.response.data.message,
       type: 'error'
     })
-    return Promise.reject(error.response)
+    // throw error
+    // return Promise.reject(error.response)
   })
   return instance
 }

@@ -1,31 +1,36 @@
 <!--  -->
 <template>
-  <div>
-    这是发现页
-    <i class="iconfont icon-color-blue" :class='"icon-" + type'></i>
+  <div class='discovery-wrap'>
+    <Banner />
+    <RecommendSongsheet />
+    <NewMusic />
+    <RecommendMv />
+    <RecommendRadio />
   </div>
 </template>
 
 <script>
-export default {
-  data () {
+import Banner from './banner'
+import RecommendSongsheet from './recommend-songsheet'
+import NewMusic from './new-music'
+import RecommendMv from './recommend-mv'
+import RecommendRadio from './recommend-radio'
+export default { 
+  components: { Banner, RecommendSongsheet, NewMusic, RecommendMv, RecommendRadio },
+  data() {
     return {
-      type: 'main_girl'
-    };
-  },
 
-  components: {},
-
-  computed: {},
-
-  mounted(){},
-
-  methods: {}
+    }
+  }
 }
 
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
-.icon-color-blue{
-  color: $red;
+.discovery-wrap{
+  margin: 0 auto;
+  background: #212121;
+  padding: 20px 30px 0;
+  max-width: $center-content-max-width;
+  min-width: $layout-content-min-width;
 }
 </style>

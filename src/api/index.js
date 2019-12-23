@@ -1,2 +1,5 @@
 export * from './search'
 export * from './user'
+export * from './discovery'
+export * from './recommend'
+export * from './song'

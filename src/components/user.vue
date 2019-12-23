@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from '@/store/helper/user'
 import { login, getUserDetail } from '@/api'
 import { confirm } from '@/base/confirm'
 import storage from 'good-storage'
@@ -130,6 +130,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    z-index: $userdetail-index;
     .d-line{
       display: flex;
       position: relative;

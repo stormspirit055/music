@@ -50,5 +50,8 @@ export default {
   &.default{
     color: #606060;
   }
+  &.red{
+    color: $red;
+  }
 }
 </style>

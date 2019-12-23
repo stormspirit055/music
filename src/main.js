@@ -3,6 +3,7 @@ import App from './App'
 import router from './router'
 import global from '@/utils/registerGlobal'
 import store from '@/store'
+import VueLazyload from "vue-lazyload"
 import '@/utils/rem'
 import '@/style/index'
 Vue.use(router)

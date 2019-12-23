@@ -21,7 +21,7 @@ export default {
 
   components: {
     LayoutHeader,
-    LayoutMenu
+    LayoutMenu,
   },
 
   computed: {},
@@ -39,6 +39,13 @@ export default {
     display: flex;
     position: relative;
     height: calc(100% - #{$layout-header-height});
+    .b-view{
+      flex: 1;
+      overflow-y: auto;
+      min-width: $layout-content-min-width;
+      margin-bottom: $mini-player-height;
+      background: #212121;
+    }
   }
 }
 </style>
