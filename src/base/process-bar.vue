@@ -1,14 +1,14 @@
 <template>
   <div class='process-bar-wrap'
     ref='process'
-    @mouseenter='showball = true'
-    @mouseleave="showball = false"
+    @mouseenter='!alwaysShowBall ? showball = true : ""'
+    @mouseleave='!alwaysShowBall ? showball = false : ""'
     @click='_handleClick'
   >
-    <div class="w-line" ref='line' >
+    <div class="w-line" :style='{background: bgColor ? bgColor : "202020"}' ref='line' >
       <div class="l-process" :style='{width: currentWidth}'>
         <div class="p-ball" 
-          v-if='showball' 
+          v-if='alwaysShowBall || showball' 
           @mousedown.stop="_handleMousedown"
         ></div>
       </div>
@@ -19,7 +19,7 @@
 <script>
 export default {
   name: 'ProcessBar',
-  props: ['percent'],
+  props: ['percent', 'bgColor', 'alwaysShowBall'],
   data () {
     return {
       showball: !1,
@@ -52,21 +52,31 @@ export default {
     },
     _setProcess(current) {
       let process = this.$refs.process.clientWidth
-      this.$emit('setProcess', (current / process).toFixed(2))
+      let startX = this.$refs.process.getBoundingClientRect().left
+      current = Math.min(Math.max(current - startX, 0), process)
+      const percent = (current/ process).toFixed(2)
+      this.$emit('setProcess', percent)
     },
     _setPos(currentPos) {
+      let startX = this.$refs.process.getBoundingClientRect().left
       let process = this.$refs.process.clientWidth
-      this.currentWidth = this.$utils.toCurrentRem(currentPos)
+      this.currentWidth = this.$utils.toCurrentRem(Math.min(Math.max(currentPos - startX, 0), process))
     }
   },
   components: {},
   computed: {
   },
   watch: {
-    percent(newVal) {
-      if (this.isLock) return
-      let process = this.$refs.process.clientWidth
-      this._setPos(process * newVal)
+    percent:{
+      handler(newVal) {
+        if (this.isLock) return
+        this.$nextTick(() => {
+          let process = this.$refs.process.clientWidth
+          let startX = this.$refs.process.getBoundingClientRect().left
+          this._setPos(process * newVal + startX)
+        })
+      },
+      immediate: !0
     }
   }
 }
@@ -76,11 +86,9 @@ export default {
   cursor: pointer;
   height: 2px;
   padding: 6px 0;
-  position: absolute;
-  top: -7px;
   width: 100%;
   .w-line{
-    background: #202020;
+    // background: #202020;
     position: relative;
     height: 2px;
     width: 100%;
@@ -91,7 +99,7 @@ export default {
       width: 0%;
       .p-ball{
         position: absolute;
-        right: 0;
+        right: -10px;
         @include round(10px);
         top: -4px;
         background: $red;

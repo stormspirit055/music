@@ -4,5 +4,11 @@ export default{
   },
   setCurrentProcess(state, currentProcess) {
     state.currentProcess = currentProcess
+  },
+  setSongState(state, isPlaying) {
+    state.isPlaying = isPlaying
+  },
+  setOrderType(state, type) {
+    state.currentOrderKey = type
   }
 }

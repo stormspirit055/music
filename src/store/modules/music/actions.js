@@ -1,6 +1,6 @@
 export default {
-  async switchSong({ commit }, song) {
+  startSong({ commit }, song) {
     commit('setCurrentSong', song)
-  }
-  
+    commit('setSongState', !0)
+  },
 }

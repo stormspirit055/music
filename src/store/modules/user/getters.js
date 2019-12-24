@@ -9,7 +9,7 @@ export const menuList = (state) => {
   const collectList = []
   userPlaylist.forEach(v => {
     let item = {
-      path: `/playlist/${v.id}`,
+      path: `/songsheet/${v.id}`,
       meta: {
         title: v.name,
         icon: 'gedan'

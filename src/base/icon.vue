@@ -20,7 +20,7 @@ export default {
     };
   },
   render(h) {
-    const Icon = (<i class={this.getIconClass()}  style={this.getIconStyle()} />)
+    const Icon = (<i onClick={this._handleClick} class={this.getIconClass()}  style={this.getIconStyle()} />)
     return Icon
   },
   methods: {
@@ -32,6 +32,9 @@ export default {
         iconClass += ' default'
       }
       return iconClass
+    },
+    _handleClick() {
+      this.$emit('click')
     },
     getIconStyle() {
       let iconStyle = `font-size: ${toRem(this.size)};`

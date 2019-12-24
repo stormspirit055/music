@@ -1,6 +1,6 @@
 <template>
   <div class='mini-player-wrap'>
-    <div class="w-process">
+    <div class="w-process" v-if='currentSong.name'>
       <ProcessBar :percent='currentPercent' @setProcess='_handleSetProcess' />
     </div>
     <div class="w-panel">
@@ -13,7 +13,7 @@
           <div class="l-info">
             <div class="i-name">
               <span class='n-song'>{{currentSong.name}}</span>
-              <span class='n-author' v-for='(item, index) in currentSong.artists' :key="index">{{item.name}}</span>
+              <span class='n-author' v-for='(item, index) in currentSong.artists' :key="index">- {{item.name}}</span>
             </div>
             <div class="i-time">{{$utils.filterProcessTime(currentProcess) + ' / ' + $utils.filterProcessTime(currentSong.duration)}} </div>
           </div>
@@ -21,22 +21,31 @@
       </div>
       <div class="p-middle">
         <Icon class='m-like' type='main_girl' />
-        <Icon class='m-prev' type='shangyishou' />
-        <div class="m-play">
-          <Icon type='bofang' />
+        <Icon class='m-prev' type='shangyishou' :size='24' />
+        <div class="m-play" @click='_switchState'>
+          <Icon type='bofang' v-if='!isPlaying' />
+          <Icon type='zantingtingzhi' v-else />
         </div>
-        <Icon class='m-next' type='xiayishou' />
-        <Icon type='fenxiang' />
+        <Icon class='m-prev rotate' type='shangyishou' :size='24' />
+        <Icon type='fenxiang' class='m-share'  :size='16' />
       </div>
       <div class="p-right">
-        <div class="r-order"></div>
-        <div class="r-songlist-trigger"></div>
+        <div class="r-order"
+          @mouseenter='isShowOrder = true' 
+          @mouseleave='isShowOrder = false'>
+          <Icon @click='_handleSwitchOrder' :type='currentOrder.icon' :size='18' />
+          <div class="o-label"  v-if='isShowOrder'>{{currentOrder.label}}</div>
+        </div>
+        <Icon class="r-songlist-trigger" type='bofangliebiao' :size='16' />
         <div class="r-lyric-trigger"></div>
-        <div class="r-volume-trigger"></div>
+        <div class="r-volume-trigger">
+          <Volume :volume='volume' @changeVolume='_handleChangeVolume' />
+        </div>
       </div>
     </div>
     <audio 
       autoplay
+      @canplay='_isCanplay'
       @timeupdate="updateTime"
       ref='audio'
       :src='currentSong.url'
@@ -46,33 +55,68 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations, mapState } from '@/store/helper/music'
+import { playOrderMap } from '@/config'
+import storage from 'good-storage'
 export default {
   data () {
     return {
+      isSongReady: !1,
+      isShowOrder: !1,
+      volume: storage.get('VOLUME', 0.5),
     };
   },
 
-  mounted(){},
+  mounted() {
+    this.audio.volume = this.volume
+  },
   methods: {
-    ...mapMutations(['setCurrentProcess']),
+    ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType']),
     updateTime(e) {
       this.setCurrentProcess(e.target.currentTime)
     },
     _handleSetProcess(e) {
       this.audio.currentTime = (e * this.currentSong.duration).toFixed(2)
       this.setCurrentProcess((e * this.currentSong.duration).toFixed(2))
+    },
+    _play() {
+      this.isSongReady && this.audio.play()
+    },
+    _pause() {
+      this.audio.pause()
+    },
+    _switchState() {
+      this.setSongState(!this.isPlaying)
+    },
+    _isCanplay(){
+      this.isSongReady = !0
+    },
+    _handleSwitchOrder() {
+      let keys = Object.keys(playOrderMap)
+      let currentIndex = keys.findIndex(v => v == this.currentOrderKey)
+      this.setOrderType(keys[currentIndex === keys.length - 1 ? 0 : currentIndex + 1])
+    },
+    _handleChangeVolume(e) {
+      this.audio.volume = e
     }
   },
   components: {},
   computed: {
-    ...mapState(['currentSong', 'currentProcess']),
+    ...mapState(['currentSong', 'currentProcess', 'isPlaying', 'currentOrderKey']),
     currentPercent() {
       return (this.currentProcess / this.currentSong.duration).toFixed(3)
     },
     audio() {
       return this.$refs.audio
     },
+    currentOrder() {
+      return playOrderMap[this.currentOrderKey]
+    }
   },
+  watch: {
+    isPlaying(newV) {
+      newV ? this._play() : this._pause()
+    }
+  }
 }
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
@@ -83,11 +127,112 @@ export default {
   z-index: 10;
   width: 100%;
   height: $mini-player-height;
+  background: #212121;
+  min-width: $layout-content-min-width;
+  .w-process{
+    position: absolute;
+    width: 100%;
+    top: -7px;
+  }
   .w-panel{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 100%;
     .p-left{
       display: flex;
+      width: 30%;
+      align-items: center;
+      padding-left: 8px;
+      .l-img{
+        position: relative;
+        @include flex-center;
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+        margin-right: 10px;
+        overflow: hidden;
+        i{
+          position: absolute;
+        }
+      }
+      .l-info{
+        .i-name{
+          margin-bottom: 4px;
+          .n-song{
+            font-size: $font-size-medium-sm;
+            color: $grey;
+          }
+          .n-author{
+            font-size: $font-size-sm;
+            color: $font-normal-color;
+          }
+        }
+        .i-time{
+           font-size: $font-size-sm;
+            color: $font-normal-color;
+        }
+      }
+    }
+    .p-middle{
+      display: flex;
+      width: 300px;
+      justify-content: space-between;
+      align-items: center;
+      width: 200px;
+      .m-prev {
+        color: $red;
+        &.rotate{
+          transform: rotate(180deg);
+        }
+      }
+      .m-play{
+        @include round(40px);
+        @include flex-center();
+        background: $red;
+        i{
+          color: #fff;
+        }
+      }
+      .m-share{
+        color: #fff;
+      }
+    }
+    .p-right{
+      display: flex;
+      width: 30%;
+      align-items: center;
+      .r-order{
+        position: relative;
+        user-select: none;
+        margin-right: 10px;
+        cursor: pointer;
+        i{
+          color: #fff;
+        }
+        .o-label{
+          position: absolute;
+          width: 60px;
+          height: 20px;
+          top: -20px;
+          color: $grey;
+          text-align: center;
+          line-height: 20px;
+          font-size: $font-size-sm;
+          background: #212121;
+          border-radius: 4px;
+          box-shadow: 0px 0px 4px 2px #333;
+          left: 50%;
+          margin-left: -30px;
+        }
+      }
+      .r-songlist-trigger{
+        color: #fff;
+        margin-right: 10px;
+        &.acitve{
+          color: $red;
+        }
+      }
     }
   }
 }

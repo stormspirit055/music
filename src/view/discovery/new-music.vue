@@ -65,10 +65,12 @@ export default {
     this.songList.splice(10)
   },
   methods: {
-    ...mapActions(['switchSong']),
+    ...mapActions(['startSong']),
     async _handlePlay(song) {
       console.log('播放')
-      this.switchSong(song)
+      let result = await getSongDetail({ids: song.id })
+      console.log(result)
+      this.startSong(song)
     }
   },
   components: {},
