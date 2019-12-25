@@ -36,7 +36,7 @@
           <Icon @click='_handleSwitchOrder' :type='currentOrder.icon' :size='18' />
           <div class="o-label"  v-if='isShowOrder'>{{currentOrder.label}}</div>
         </div>
-        <Icon class="r-songlist-trigger" type='bofangliebiao' :size='16' />
+        <Icon @click='_handleDisplayPlaylist' class="r-songlist-trigger" :class='{active: isShowPlaylist}' type='bofangliebiao' :size='16' />
         <div class="r-lyric-trigger"></div>
         <div class="r-volume-trigger">
           <Volume :volume='volume' @changeVolume='_handleChangeVolume' />
@@ -70,7 +70,7 @@ export default {
     this.audio.volume = this.volume
   },
   methods: {
-    ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType']),
+    ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType', 'setPlaylistState']),
     updateTime(e) {
       this.setCurrentProcess(e.target.currentTime)
     },
@@ -97,11 +97,16 @@ export default {
     },
     _handleChangeVolume(e) {
       this.audio.volume = e
+    },
+    _handleDisplayPlaylist() {
+      console.log(this.isShowPlaylist)
+      this.setPlaylistState(!this.isShowPlaylist)
     }
   },
   components: {},
   computed: {
-    ...mapState(['currentSong', 'currentProcess', 'isPlaying', 'currentOrderKey']),
+    ...mapState(['currentProcess', 'isPlaying', 'currentOrderKey', 'isShowPlaylist']),
+    ...mapGetters(['currentSong']),
     currentPercent() {
       return (this.currentProcess / this.currentSong.duration).toFixed(3)
     },
@@ -202,6 +207,9 @@ export default {
       display: flex;
       width: 30%;
       align-items: center;
+      justify-content: flex-end;
+      padding-right: 30px;
+      box-sizing: border-box;
       .r-order{
         position: relative;
         user-select: none;
@@ -229,7 +237,7 @@ export default {
       .r-songlist-trigger{
         color: #fff;
         margin-right: 10px;
-        &.acitve{
+        &.active{
           color: $red;
         }
       }

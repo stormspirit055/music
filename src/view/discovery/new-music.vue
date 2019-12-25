@@ -60,6 +60,8 @@ export default {
         artists,
         duration,
         mvid,
+        albumId: v.song.album.id,
+        inSheet: !1
       })
     })
     this.songList.splice(10)

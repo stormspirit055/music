@@ -2,6 +2,7 @@ import Router from 'vue-router'
 import Vue from 'vue'
 import Menu from '@/components/menu'
 import Discovery from '@/view/discovery'
+import SongSheet from '@/view/songsheet'
 import Timeline from '@/view/timeline'
 Vue.use(Router)
 export const menuRoutes = [
@@ -55,6 +56,11 @@ const router = new Router({
       path: '/timeline',
       component: Timeline,
       name: '动态'
+    },
+    {
+      path: '/songsheet/:id',
+      component: SongSheet,
+      name: '歌单'
     }
   ]
 })

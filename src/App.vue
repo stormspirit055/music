@@ -3,12 +3,14 @@
   <div id='app'>
     <Layout />
     <MiniPlayer />
+    <Playlist />
   </div>
 </template>
 
 <script>
 import Layout from '@/view/layout'
 import MiniPlayer from '@/components/mini-player'
+import Playlist from '@/components/playlist'
 export default {
   data () {
     return {
@@ -17,7 +19,8 @@ export default {
 
   components: {
     Layout,
-    MiniPlayer
+    MiniPlayer,
+    Playlist
   },
 
   computed: {},

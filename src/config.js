@@ -16,3 +16,7 @@ export const playOrderMap = {
     label: '随机播放'
   }
 }
+export const noImpactNodeMap = {
+  'PLAY_LIST': ['.mini-player-wrap'],
+  'SEARCH_PANEL': ['']
+}

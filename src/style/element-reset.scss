@@ -48,3 +48,9 @@ $input-height-login: 34px;
   background: $red !important;
   border-radius: 2px !important;
 }
+.el-loading-mask{
+  background: rgba(0 ,0, 0, .3) !important;
+  circle{
+    stroke: $red !important;
+  }
+}

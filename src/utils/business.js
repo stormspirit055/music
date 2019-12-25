@@ -2,7 +2,7 @@ export function getSongUrl(id) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 }
 export function generateSong(song) {
-  const { id, picUrl, name, artists, mvid, duration } = song
+  const { id, picUrl, name, artists, mvid, duration, ...rest } = song
   return {
     id,
     url: getSongUrl(id),
@@ -10,6 +10,7 @@ export function generateSong(song) {
     name,
     artists,
     mvid,
-    duration: duration / 1000
+    duration: duration / 1000,
+    ...rest
   }
 }

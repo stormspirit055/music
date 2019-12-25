@@ -11,3 +11,18 @@ export function filterProcessTime(time) {
   let second = time % 60 < 10 ? '0' + time % 60 : time % 60
   return minute + ':' +second
 }
+
+export function isChildOf(child, parents) {
+  let mark = 0
+  const parentNodes = parents.map(v => document.querySelector(v))
+  for (let value of parentNodes) {
+    let parentNode = child.parentNode;
+    while(parentNode) {
+        if(value === parentNode) {
+          mark++
+        }
+        parentNode = parentNode.parentNode;
+    }
+  }
+  return mark !== 0;
+}
