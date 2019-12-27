@@ -1,13 +1,13 @@
 <template>
   <div class='songsheet-wrap'>
-    <Header :headInfo='headInfo' />
+    <Header ref='header' :headInfo='headInfo' />
     <div class="w-router">
       <div class="r-left">
         <div class='l-item' @click='_swtichMode(0)' :class='{active: currentTab == 0}'>歌曲列表</div>
         <div class='l-item' @click='_swtichMode(1)' :class='{active: currentTab == 1}'>评论({{commentCount}})</div>
         <div class='l-item' @click='_swtichMode(2)' :class='{active: currentTab == 2}'>收藏者</div>
       </div>
-      <div class="r-right">
+      <div class="r-right" v-show='currentTab == 0'>
         <el-input
           prefix-icon="el-icon-search"
           class='el-input-search'
@@ -15,13 +15,15 @@
         </el-input>
       </div>
     </div>
-    <SongList :songList='songList' />
+    <SongList v-show='currentTab == 0' :songList='songList' />
+    <Comment :id='$route.params.id' v-show='currentTab == 1' />
   </div>
 </template>
 
 <script>
 import Header from './header'
 import SongList from '@/components/songlist'
+import Comment from '@/components/comment'
 import { getSongSheetDetail } from '@/api'
 export default {
   data () {
@@ -33,8 +35,8 @@ export default {
       keywords: ''
     };
   },
-  created(){
-    this._getDetail()
+  mounted(){
+    console.log(this.$el)
   },
   methods: {
     _swtichMode(mode) {
@@ -48,6 +50,7 @@ export default {
         tracks,
         playCount,
         commentCount,
+        id,
         creator: {
           nickname,
           avatarUrl
@@ -87,8 +90,21 @@ export default {
       this._generateSonglist(tracks)
     }
   },
-  components: { Header, SongList },
-  computed: {},
+  components: { Header, SongList, Comment },
+  watch: {
+    id: {
+      handler() {
+        this._getDetail()
+        this.keywords = ""
+      },
+      immediate: true,
+    }
+  },
+  computed: {
+    id() {
+      return Number(this.$route.params.id)
+    },
+  },
 }
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>

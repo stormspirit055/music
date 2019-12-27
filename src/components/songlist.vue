@@ -12,7 +12,7 @@
         width="50px"
       >
         <template slot-scope='scope'>
-          <span v-if='currentId != scope.row.id'>{{scope.$index + 1 | addZero}}</span>
+          <span v-if='currentSong.id != scope.row.id'>{{scope.$index + 1 | addZero}}</span>
           <Icon v-else type='laba1' class='c-play' />
         </template>
       </el-table-column>
@@ -55,26 +55,44 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from '@/store/helper/music'
+
 export default {
   name: 'SongList',
   props: ['songList'],
   data () {
     return {
-      currentId: ''
     };
   },
-  mounted(){},
+  mounted(){
+    this.$bus.on('PLAY_ALL', this._playAll)
+  },
   methods: {
     ...mapActions(['startSong']),
     ...mapMutations(['setPlayList']),
     _handleDbclick(e) {
       this.startSong(e)
-      this.currentId = e.id
       if (e.albumId !== this.playList.albumId) {
         this.setPlayList({
           albumId: e.albumId,
           list: this.songList
         })
+      }
+    },
+    _playAll(e) {
+      if (e !== this.playList.albumId) {
+        this.setPlayList({
+          albumId: e,
+          list: this.songList
+        })
+        let randomIndex = Math.floor(Math.random() * this.songList.length)
+        this.startSong(this.songList[randomIndex])
+      } else {
+        let currentIndex = this.songList.findIndex(v => v.id === this.currentSong.id)
+        let randomIndex = currentIndex
+        while(randomIndex === currentIndex) {
+          randomIndex = Math.floor(Math.random() * this.songList.length)
+        }
+        this.startSong(this.songList[randomIndex])
       }
     },
     tableRowClassName({row, rowIndex}) {
@@ -88,9 +106,8 @@ export default {
   components: {
   },
   computed: {
-    ...mapState(['playList']),
+    ...mapState(['playList', 'currentSong']),
     filterSongList() {
-
       return this.songList
     }
   },

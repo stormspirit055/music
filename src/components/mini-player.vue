@@ -47,6 +47,7 @@
       autoplay
       @canplay='_isCanplay'
       @timeupdate="updateTime"
+      @ended='_handleEnded'
       ref='audio'
       :src='currentSong.url'
     />
@@ -71,6 +72,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType', 'setPlaylistState']),
+    ...mapActions(['endSong', 'startSong', 'cleanCurrentSong']),
     updateTime(e) {
       this.setCurrentProcess(e.target.currentTime)
     },
@@ -87,8 +89,47 @@ export default {
     _switchState() {
       this.setSongState(!this.isPlaying)
     },
+    _handleEnded() {
+      const playList = this.playList.list
+      const id = this.currentSong.id
+      const currentIndex = playList.findIndex(v => v.id === id)
+      console.log(currentIndex)
+      console.log(playList[currentIndex])
+      console.log()
+      switch(this.currentOrderKey) {
+        case 'ORDER_LOOP':
+          this.setCurrentProcess(0)
+          // this.startSong(playList[currentIndex])
+          break;
+        case 'ORDER_SEQUENCE':
+          if (currentIndex + 1 < playList.length) {
+            this.startSong(playList[currentIndex + 1])
+          } else {
+            this.cleanCurrentSong()
+            return
+          }
+          break;
+        case 'ORDER_LIST':
+          if (currentIndex + 1 < playList.length) {
+            this.startSong(playList[currentIndex + 1])
+          } else {
+            this.startSong(playList[0])
+          }
+          break;
+        case 'ORDER_RANDOM':
+          let randomIndex = currentIndex
+          while(randomIndex === currentIndex) {
+            randomIndex = Math.floor(Math.random() * playList.length)
+          }
+          this.startSong(playList[randomIndex])
+          break;
+      }
+      // this.endSong(this.currentSong.id)
+      this._play()
+    },
     _isCanplay(){
       this.isSongReady = !0
+      console.log('canpaly')
     },
     _handleSwitchOrder() {
       let keys = Object.keys(playOrderMap)
@@ -105,7 +146,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapState(['currentProcess', 'isPlaying', 'currentOrderKey', 'isShowPlaylist']),
+    ...mapState(['currentProcess', 'isPlaying', 'currentOrderKey', 'isShowPlaylist', 'playList']),
     ...mapGetters(['currentSong']),
     currentPercent() {
       return (this.currentProcess / this.currentSong.duration).toFixed(3)

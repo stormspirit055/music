@@ -3,6 +3,7 @@ import { request } from '@/utils/request'
 export const getBanner = () => request.get('/banner/type=0')
 // 推荐歌单
 export const getRecommendSongsheet = () => request.get('/recommend/resource')
+// 每日推荐的歌曲
 export const getRecommendSongs = () => request.get('/recommend/songs')
 //推荐新音乐
 export const getNewRecommendSongs = () => request.get('/personalized/newsong')

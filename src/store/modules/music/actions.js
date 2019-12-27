@@ -7,7 +7,7 @@ export default {
     if (!isCanPlay) {
       Notification({
         title: '提示',
-        message: '我也不知道为啥播不了',
+        message: `${song.name}播放失败 :(`,
         type: 'error'
       })
       return
@@ -23,12 +23,16 @@ export default {
     commit('updatePlayHistory', [])
     storage.set('PLAY_HISTORY', [])
   },
+  cleanCurrentSong({ commit }) {
+    commit('setCurrentSong', {})
+    commit('setSongState', !1)
+  },
   cleanPlayList({ commit }) {
     commit('setPlayList', {
       albumId: '',
       list: []
     })
-  }
+  },
 }
 async function checkSong(id) {
   let { data }  = await getSongUrl({ id })

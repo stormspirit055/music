@@ -5,3 +5,5 @@ export const getSongDetail = (params) => request.get('/song/detail', { params})
 export const getSongUrl = (params) => request.get('/song/url', { params})
 // 获取歌单详情
 export const getSongSheetDetail = (params) => request.get('/playlist/detail', { params})
+// 获取歌单评论
+export const getSongSheetComment = (params) => request.get('/comment/playlist', { params})

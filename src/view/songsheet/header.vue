@@ -11,7 +11,7 @@
         <span class='c-name'>{{headInfo.nickname}}</span>
         <span class="c-time">{{$formatDate(headInfo.createTime)}}创建</span>
       </div>
-      <div class="i-btn">
+      <div class="i-btn" @click='_handlePlayAll'>
         <Icon type='bofang1' />
         播放全部
       </div>
@@ -37,7 +37,12 @@ export default {
   },
 
   mounted(){},
-  methods: {},
+  methods: {
+    _handlePlayAll() {
+
+      this.$bus.emit('PLAY_ALL', this.headInfo.id)
+    }
+  },
   components: {},
   computed: {},
 }
@@ -99,6 +104,7 @@ export default {
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
+      cursor: pointer;
       i{
         color: #fff;
         margin-right: 5px;

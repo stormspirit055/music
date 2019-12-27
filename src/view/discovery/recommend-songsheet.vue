@@ -7,7 +7,7 @@
     </div>
     <!-- <Playbtn /> -->
     <div class="w-list">
-      <div class="l-item" v-for='(item, index) in recommendList' :key='index'>
+      <router-link tag='div' :to='"/songsheet/" + item.id' class="l-item" v-for='(item, index) in recommendList' :key='index'>
         <div class="i-innerwrap">
           <div class="i-desc" v-if='index == 0'>{{item.desc}}</div>
           <el-image class='i-img' lazy  :src='$utils.generateImgurl(item.picUrl, 180)'></el-image>
@@ -18,7 +18,7 @@
           <Playbtn class='i-play' />
         </div>
         <div class="i-name">{{item.name}}</div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
