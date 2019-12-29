@@ -12,6 +12,9 @@ import {
 } from 'element-ui';
 import * as utils from '@/utils'
 import moment from 'moment'
+import VueLazyload from "vue-lazyload"
+export const EMPTY_IMG =
+  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 export default {
   install(Vue) {
     const requireComponent = require.context(
@@ -39,6 +42,10 @@ export default {
     Vue.prototype.$ELEMENT = { size: "small" }
     Vue.prototype.$utils = utils
     Vue.prototype.$formatDate = formatDate
+    Vue.use(VueLazyload, {
+      loading: EMPTY_IMG,
+      error: EMPTY_IMG,
+    })
   },
 }
 function formatDate(stmp, format = 'YYYY-MM-DD') {

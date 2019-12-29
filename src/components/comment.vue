@@ -1,12 +1,12 @@
 <template>
-  <div class='comment-wrap' ref='wrap'>
-    <div class='block'>
+  <div class='comment-wrap' v-if='id' ref='wrap' >
+    <div class='block' v-if='pageNum == 1'>
       <div class="w-title">精彩评论</div>
-      <Commentlist :comments='hotComments'  />
+      <Commentlist  :comments='hotComments'  />
     </div>
     <div class='block'>
-      <div class='w-title'>最新评论</div>
-      <Commentlist :comments='comments'  />
+      <div class='w-title'>最新评论 ({{total}})</div>
+      <Commentlist  :comments='comments'  />
     </div>
     <Pagination @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize'></Pagination>
   </div>

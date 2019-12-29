@@ -8,7 +8,7 @@
       <div class="l-item" v-for='(item, index) in mvList' :key='index'>
         <div class="i-innerwrap">
           <div class="i-desc">{{item.copywriter}}</div>
-          <el-image class='i-img'  :src='$utils.generateImgurl(item.picUrl, 220, 126)'></el-image>
+          <img class='i-img'  v-lazy='$utils.generateImgurl(item.picUrl, 220, 126)' />
           <div class="i-num" > 
             <Icon type='bofang-' :size='12' />
             {{item.playCount | countFilter}}

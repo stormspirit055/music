@@ -1,6 +1,6 @@
  <template>
-   <div class='layoutHeader-wrap'>
-     <div class="w-left">
+   <div class='layoutHeader-wrap' >
+     <div class="w-left" :class='{showPanel:showPlayPanel}'>
       <div class="l-macbtn">
        <div class='m-button red'>
        </div>
@@ -9,12 +9,13 @@
        <div class='m-button green'>
        </div>
       </div>  
-      <div class="l-history">
+      <Icon type='shouzhanjintui'  @click='setPlayPanelState(false)' v-show='showPlayPanel' class='l-showPlayer' :size='24' />
+      <div class="l-history" v-show='!showPlayPanel'>
         <Icon type='shouzhanjintui' @click='_handleBack' class='h-icon rotate active'  :size='24'  />
         <Icon type='shouzhanjintui' class='h-icon active' @click='_handleForward' :size='24' />
       </div>
      </div>
-     <div class="w-right">
+     <div class="w-right" :class='{showPanel:showPlayPanel}'>
        <div class="r-router">
           <div class="r-item" :class='currentIndex == index ? "active" : "default"' v-for='(item, index) in routerList' :key='index'>
             {{item}}
@@ -33,6 +34,7 @@
  </template>
  <script>
  import Icon from '@/base/icon'
+ import { mapState, mapMutations } from '@/store/helper/music'
  export default {
    data () {
      return {
@@ -46,20 +48,13 @@
    components: {Icon},
  
    computed: {
+     ...mapState(['showPlayPanel']),
      routerList() {
        return ['个性推荐', '歌单', '主播电台']
      },
-    //  routeHasNext() {
-       
-    //  }
    },
- 
-   mounted(){
-
-     console.log(this.$route.matched)
-   },
- 
    methods: {
+     ...mapMutations(['setPlayPanelState']),
      _handleBack() {
        this.$router.back()
      },
@@ -74,6 +69,10 @@
  .layoutHeader-wrap{
    position: relative;
    display: flex;
+   z-index: $mini-player-z-index;
+   .showPanel{
+     background: #262626 !important;
+   }
    .w-left{
      width: $menu-side-width;
      box-sizing: border-box;
@@ -83,7 +82,7 @@
      background: #272727;
      height: $layout-header-height;
      .l-macbtn{
-       z-index: $mini-player-z-index;
+       
        display: flex;
        .m-button{
          @include round(12px);
@@ -103,8 +102,13 @@
         }
        }
      }
+     .l-showPlayer{
+       transform: rotate(90deg);
+       color: #fff !important;
+       margin-bottom: 20px;
+       cursor: pointer;
+     }
      .l-history{
-       z-index: $mini-player-z-index;
        display: flex;
        width: 50px;
        align-items: center;
@@ -132,7 +136,6 @@
      align-items: center;
      justify-content: space-between;
      .r-router{
-       z-index: $mini-player-z-index;
        display: flex;
        .r-item{
          font-size: 14px;
@@ -149,7 +152,6 @@
        }
      }
      .r-search{
-       z-index: $mini-player-z-index;
      }
    }
  }

@@ -1,6 +1,6 @@
 <template>
   <div class='simiuser-wrap'>
-    <el-image lazy class="w-img"  :src='$utils.generateImgurl(info.avatarUrl, 50)'></el-image>
+    <img lazy class="w-img"  :src='$utils.generateImgurl(info.avatarUrl, 50)' />
     <div class="w-info">
       <div class="i-name">
         {{info.nickname}}

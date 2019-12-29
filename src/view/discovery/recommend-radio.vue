@@ -6,7 +6,7 @@
     </div>
     <div class="w-list">
       <div class="l-item" v-for='(item, index) in radioList' :key='index'>
-        <el-image class="i-left" lazy :src='$utils.generateImgurl(item.picUrl, 90)'></el-image>
+        <img class="i-left" v-lazy='$utils.generateImgurl(item.picUrl, 90)' />
         <div class="i-right">
           <div class="r-name">{{item.name}}</div>
           <div class="r-artists">

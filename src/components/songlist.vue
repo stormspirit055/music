@@ -106,7 +106,7 @@ export default {
   components: {
   },
   computed: {
-    ...mapState(['playList', 'currentSong']),
+    ...mapState(['playList', 'currentSong', 'isPlaying']),
     filterSongList() {
       return this.songList
     }

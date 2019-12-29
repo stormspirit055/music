@@ -10,7 +10,7 @@
       <router-link tag='div' :to='"/songsheet/" + item.id' class="l-item" v-for='(item, index) in recommendList' :key='index'>
         <div class="i-innerwrap">
           <div class="i-desc" v-if='index == 0'>{{item.desc}}</div>
-          <el-image class='i-img' lazy  :src='$utils.generateImgurl(item.picUrl, 180)'></el-image>
+          <img class='i-img'   v-lazy='$utils.generateImgurl(item.picUrl, 180)'>
           <div class="i-num" v-if='index != 0'> 
             <Icon type='bofang-' :size='12' />
             {{item.playcount | countFilter}}

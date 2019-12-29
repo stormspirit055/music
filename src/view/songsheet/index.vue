@@ -16,7 +16,7 @@
       </div>
     </div>
     <SongList v-show='currentTab == 0' :songList='songList' />
-    <Comment :id='$route.params.id' type='sheet' v-show='currentTab == 1' />
+    <Comment v-show='currentTab == 1' :id='commentId' type='sheet' />
   </div>
 </template>
 
@@ -32,7 +32,9 @@ export default {
       songList: [],
       currentTab: 0,
       commentCount: 0,
-      keywords: ''
+      keywords: '',
+      commentId: 0
+      // id: 0
     };
   },
   mounted(){
@@ -40,6 +42,7 @@ export default {
   methods: {
     _swtichMode(mode) {
       this.currentTab = mode
+      if (mode == 1 && !this.commentId) this.commentId = this.$route.params.id
     },
     _generateHead(data) {
       const {

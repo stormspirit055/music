@@ -1,7 +1,7 @@
 <template>
-  <div class='comment-list-wrap'>
-    <div class="w-item" v-for='(item, index) in comments' :key='index'>
-      <el-image  class='i-avatar' lazy :src='$utils.generateImgurl(item.user.avatarUrl, 35)'></el-image>
+  <div class='comment-list-wrap' v-if='comments.length'>
+    <div class="w-item"  v-for='(item, index) in comments' :key='index'>
+      <img  class='i-avatar'  v-lazy='$utils.generateImgurl(item.user.avatarUrl, 35)' />
       <div class="i-info">
         <p class="i-top">
           <span class="t-name">{{item.user.nickname}}: </span>

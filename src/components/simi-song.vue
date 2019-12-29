@@ -1,7 +1,7 @@
 <template>
   <div class='simisong-wrap' @click='_handlePlay'>
     <div class="w-img">
-      <el-image class='img' lazy :src='$utils.generateImgurl(info.picUrl, 50)'></el-image>
+      <img class='img'  v-lazy='$utils.generateImgurl(info.picUrl, 50)' />
       <Playbtn />
     </div>
     <div class="w-info">

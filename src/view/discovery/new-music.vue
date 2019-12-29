@@ -7,7 +7,7 @@
     <div class="w-list">
       <div class="l-item" v-for='(item, index) in songList' @click='_handlePlay(item)' :key='index'>
         <div class="i-left">
-          <el-image class='l-img' :src='$utils.generateImgurl(item.picUrl, 90)'></el-image>
+          <img class='l-img' v-lazy='$utils.generateImgurl(item.picUrl, 90)'>
           <Playbtn class='l-play' />
         </div>
         <div class="i-middle">

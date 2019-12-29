@@ -1,6 +1,6 @@
 <template>
   <div class='simisheet-wrap' @click='_handleGo'>
-    <el-image class='w-img' :src='$utils.generateImgurl(info.coverImgUrl, 50)'></el-image>
+    <img class='w-img' v-lazy='$utils.generateImgurl(info.coverImgUrl, 50)'>
     <div class="w-info">
       <div class="i-name">{{info.name}}</div>
       <div class="i-play">

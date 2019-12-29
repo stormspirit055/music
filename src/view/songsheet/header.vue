@@ -1,13 +1,13 @@
 <template>
   <div class='songsheet-header-wrap'>
-    <el-image class='w-cover' :src='$utils.generateImgurl(headInfo.coverImgUrl, 200)'></el-image>
+    <img class='w-cover' v-lazy='$utils.generateImgurl(headInfo.coverImgUrl, 200)' />
     <div class="w-info">
       <div class="i-name">
         <div class="n-tag">歌单</div>
         <span class="n-name">{{headInfo.name}}</span>
       </div>
       <div class="i-creator">
-        <el-image class='c-avatar' :src='$utils.generateImgurl(headInfo.avatarUrl, 25)'></el-image>
+        <img class='c-avatar' v-lazy='$utils.generateImgurl(headInfo.avatarUrl, 25)'>
         <span class='c-name'>{{headInfo.nickname}}</span>
         <span class="c-time">{{$formatDate(headInfo.createTime)}}创建</span>
       </div>

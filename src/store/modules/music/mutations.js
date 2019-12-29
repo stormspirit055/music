@@ -7,6 +7,7 @@ export default{
     state.currentProcess = currentProcess
   },
   setSongState(state, isPlaying) {
+    if (!state.currentSong.name) return
     state.isPlaying = isPlaying
   },
   setOrderType(state, type) {

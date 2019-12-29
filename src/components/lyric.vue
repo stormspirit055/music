@@ -94,34 +94,35 @@ export default {
       let currentTime = +this.currentProcess * 1000
       return this.lyricDetail.findIndex((v, index) => {
        return  v.time <= currentTime + QUICK_SECOND && (index == this.lyricDetail.length - 1 ||this.lyricDetail[index + 1].time > currentTime + QUICK_SECOND )
-      }) || 0
-      return 0
+      }) || -1
     }
   },
   watch: {
     currentLineNum(newV) {
       console.log(newV)
-      // newV !== -1 && this.scroll.scrollToElement('.line' + newV, 200, 0, true)
+      console.log(this.scroll)
+      newV !== -1 &&  this.scroll &&  this.scroll.scrollToElement('.line' + newV, 200, 0, true)
     },
     id: {
       handler(newV) {
         if (!newV) return
-        this.scroll && this.scroll.refresh()
+        this.scroll && this.scroll.destroy()
         this._getSongLyric()
       },
       immediate: !0
     },
     lyricDetail: {
       handler(newV) {
+        console.log(newV)
         if (!newV.length) return
-        this.$nextTick(() => {
-          // this.scroll = new BScroll('.w-lyric', {
-          //   scrollbar: true,
-          //   mouseWheel: true,
-          //   scrollY: true,
-          //   probeType: 3
-          // })
-        })
+          this.$nextTick(() => {
+              this.scroll = new BScroll('.w-lyric', {
+                scrollbar: true,
+                mouseWheel: true,
+                scrollY: true,
+                probeType: 3
+              })
+          })
       },
       immediate: !0
     }
@@ -187,8 +188,9 @@ export default {
       width: 370px;
       .l-item{
         width: 370px;
-        height: 30px;
-        line-height: 30px;
+        // height: 30px;
+        padding: 8px 0;
+        line-height: 1.3em;
         color: #888;
         font-size: $font-size-medium-sm;
         transition: all .3s;

@@ -1,6 +1,6 @@
 <template>
+<transition name="slide">
   <div class='playpanel-wrap' :class='{active: showPlayPanel}'>
-    <div class="w-fixed"></div>
     <div class="w-songdetail">
       <div class="s-cd">
         <img class='c-bar' :class='{playing: isPlaying}' src="/src/assets/play-bar.png" alt="">
@@ -21,6 +21,7 @@
       </div>
     </div>
   </div>
+</transition> 
 </template>
 
 <script>
@@ -51,6 +52,15 @@ export default {
 }
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.5s;
+  transform: none;
+}
+.slide-enter,
+.slide-leave-to {
+  transform: translateY(100%);
+}
 @keyframes rotate {
   0% {
     transform: rotate(0);
@@ -62,24 +72,19 @@ export default {
 .playpanel-wrap{
   background: #262626;
   width: 100%;
-  position: absolute;
+  min-width: $layout-playpanel-min-width;
+  position: fixed;
   z-index: $play-panel-z-index;
   height: calc(100%  - #{$mini-player-height});
-  top: calc(100% - #{$mini-player-height});
-  transition: top .4s ease ;
+  // top: calc(100% - #{$mini-player-height});
+  top: 0;
+  transition: transform .4s ease ;
   padding-top: calc(#{$layout-header-height} + 10px); 
   box-sizing: border-box;
   overflow: auto;
-  .w-fixed{
-    background: #262626;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: $layout-header-height;
-    z-index: 1001;
-  }
+  transform: translateY(100%);
   &.active{
-    top: 0;
+    transform: translateY(0);
   }
   .w-songdetail{
     position: relative;
@@ -104,21 +109,21 @@ export default {
         }
       }
       .c-support{
-        width: 204px;
-        height: 204px;
+        width: 204Px;
+        height: 204Px;
         background: url(http://s2.music.126.net/style/web2/img/coverall.png?1969ba9d4bd248a86abcc63f9f6590a5) no-repeat;
-        background-position: -140px -580px;
+        background-position: -140Px -580Px;
         transform: scale(1.5);
         position: relative;
         margin-top: -10px;
         margin-left: -40px;
         img{
           position: absolute;
-          @include round(133px);
+          @include round(133Px);
           left: 50%;
-          margin-left: -66.5px;
+          margin-left: -66.5Px;
           top: 50%;
-          margin-top: -66.5px;
+          margin-top: -66.5Px;
           animation: rotate 10s linear infinite;
           &.paused{
             animation-play-state: paused;

@@ -10,14 +10,15 @@ export default {
         message: `${song.name}播放失败 :(`,
         type: 'error'
       })
-      return
+      return false
     }
-    commit('setSongState', !0)
     const { playList } = state
     generatePlayList(state, commit, playList, song)
     commit('setCurrentSong', song)
+    commit('setSongState', !0)
     commit('setCurrentProcess', 0)
     generatePlayHistory(commit, song)
+    return true
   },
   cleanPlayHistory({ commit }) {
     commit('updatePlayHistory', [])

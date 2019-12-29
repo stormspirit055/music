@@ -21,12 +21,12 @@
       </div>
       <div class="p-middle">
         <Icon class='m-like' type='main_girl' />
-        <Icon class='m-prev' type='shangyishou' :size='24' />
+        <Icon class='m-prev' @click='_handleSwitchSong("prev")' type='shangyishou' :size='24' />
         <div class="m-play" @click='_switchState'>
           <Icon type='bofang' v-if='!isPlaying' />
           <Icon type='zantingtingzhi' v-else />
         </div>
-        <Icon class='m-prev rotate' type='shangyishou' :size='24' />
+        <Icon class='m-prev rotate' @click='_handleSwitchSong("next")' type='shangyishou' :size='24' />
         <Icon type='fenxiang' class='m-share'  :size='16' />
       </div>
       <div class="p-right">
@@ -58,6 +58,7 @@
 import { mapGetters, mapActions, mapMutations, mapState } from '@/store/helper/music'
 import { playOrderMap } from '@/config'
 import storage from 'good-storage'
+let failIndex = 0
 export default {
   data () {
     return {
@@ -73,6 +74,35 @@ export default {
   methods: {
     ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType', 'setPlaylistState', 'setPlayPanelState']),
     ...mapActions(['endSong', 'startSong', 'cleanCurrentSong']),
+    _handleSwitchSong(type) {
+      let nextSong
+      if (type == 'prev') {
+        nextSong = storage.get('PLAY_HISTORY')[1]
+      } else {
+        const playList = this.playList.list
+        const id = this.currentSong.id
+        let currentIndex = playList.findIndex(v => v.id === id)
+        if (this.currentOrderKey == 'ORDER_RANDOM') {
+          let randomIndex = currentIndex
+          while(randomIndex === currentIndex) {
+            randomIndex = Math.floor(Math.random() * playList.length)
+          }
+          nextSong = playList[randomIndex]
+        } else {
+          currentIndex += failIndex
+          console.log(currentIndex)
+          nextSong = currentIndex === playList.length - 1 ? playList[0] : playList[currentIndex + 1]
+        }
+      }
+      this.startSong(nextSong).then(res => {
+        if (!res) {
+          failIndex++
+          this._handleSwitchSong(type)
+        } else {
+          failIndex = 0
+        }
+      })
+    },
     updateTime(e) {
       this.setCurrentProcess(e.target.currentTime)
     },
