@@ -13,12 +13,20 @@
 </template>
 
 <script>
-import { getSongSheetComment } from '@/api'
+import { getSongSheetComment, getSongComment } from '@/api'
 import Pagination from '@/base/pagination'
 import Commentlist from '@/base/comment-list'
 export default {
   name: "Comment",
-  props: ['id'],
+  props: {
+    id: {
+      required: true
+    },
+    type: {
+      type: String,
+      default: 'song'
+    }
+  },
   data () {
     return {
       pageSize: 20,
@@ -31,13 +39,16 @@ export default {
   mounted(){},
   methods: {
     async _getData() {
-      let result = await getSongSheetComment({id: this.id, offset: (this.pageNum - 1) * 20} )
+      let result
+      if (this.type == 'sheet') {
+        result = await getSongSheetComment({id: this.id, offset: (this.pageNum - 1) * 20} )
+      } else if (this.type == 'song') {
+        result = await getSongComment({id: this.id, offset: (this.pageNum - 1) * 20} )
+      }
       const { hotComments, comments, total } =  result
       this.total = total
       this.comments = this._generateComment(comments)
-      this.hotComments = this._generateComment(hotComments)
-      console.log('这是评论数据')
-      console.log(result)
+      if (this.pageNum == 1) this.hotComments = this._generateComment(hotComments)
     },
     _generateComment(list) {
       return list.map(v => {
@@ -70,6 +81,8 @@ export default {
   watch: {
     id: {
       handler(newV) {
+        if (!newV) return
+        this.pageNum = 1
         this._getData()
       },
       immediate: !0

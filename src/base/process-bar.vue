@@ -88,7 +88,6 @@ export default {
   padding: 6px 0;
   width: 100%;
   .w-line{
-    // background: #202020;
     position: relative;
     height: 2px;
     width: 100%;
@@ -99,7 +98,7 @@ export default {
       width: 0%;
       .p-ball{
         position: absolute;
-        right: -10px;
+        right: -5px;
         @include round(10px);
         top: -4px;
         background: $red;

@@ -26,5 +26,6 @@ export default {
   @include flex-center();
   background: rgba(255, 255, 255, .4);
   border-radius: 50%;
+  z-index: 2;
 }
 </style>

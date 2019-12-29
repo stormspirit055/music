@@ -34,7 +34,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.scss', '.jsx', '.css'],
     alias: { 
       'vue': 'vue/dist/vue.js',
-      '@': path.resolve(__dirname, 'src/')
+      '@': path.resolve(__dirname, 'src/'),
+      'assets': path.resolve(__dirname, 'src/assets'),
     }
   },
    module: {

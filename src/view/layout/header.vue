@@ -10,8 +10,8 @@
        </div>
       </div>  
       <div class="l-history">
-        <Icon type='shouzhanjintui' class='h-icon rotate' :class='routeHasPrev ? "active" : "default"' :size='24'  />
-        <Icon type='shouzhanjintui' class='h-icon' :class='routeHasNext ? "active" : "default"' :size='24' />
+        <Icon type='shouzhanjintui' @click='_handleBack' class='h-icon rotate active'  :size='24'  />
+        <Icon type='shouzhanjintui' class='h-icon active' @click='_handleForward' :size='24' />
       </div>
      </div>
      <div class="w-right">
@@ -48,14 +48,25 @@
    computed: {
      routerList() {
        return ['个性推荐', '歌单', '主播电台']
-     }
+     },
+    //  routeHasNext() {
+       
+    //  }
    },
  
    mounted(){
-     console.log(this.$route)
+
+     console.log(this.$route.matched)
    },
  
-   methods: {}
+   methods: {
+     _handleBack() {
+       this.$router.back()
+     },
+     _handleForward() {
+       this.$router.forward()
+     }
+   }
  }
  
  </script>
@@ -72,6 +83,7 @@
      background: #272727;
      height: $layout-header-height;
      .l-macbtn{
+       z-index: $mini-player-z-index;
        display: flex;
        .m-button{
          @include round(12px);
@@ -92,6 +104,7 @@
        }
      }
      .l-history{
+       z-index: $mini-player-z-index;
        display: flex;
        width: 50px;
        align-items: center;
@@ -100,11 +113,8 @@
        margin-top: -4px;
        .h-icon{
         &.active{
-          color: $white;
+          color: #fff !important;
           cursor: pointer;
-        }
-        &.default{
-          color: $grey;
         }
         &.rotate{
           transform: rotate(180deg);
@@ -122,6 +132,7 @@
      align-items: center;
      justify-content: space-between;
      .r-router{
+       z-index: $mini-player-z-index;
        display: flex;
        .r-item{
          font-size: 14px;
@@ -130,12 +141,15 @@
            margin-right: 0;
          }
          &.active{
-           color: #eee;
+           color: #eee !important;
          }
          &.default{
-           color: $grey;
+           color: $grey !important;
          }
        }
+     }
+     .r-search{
+       z-index: $mini-player-z-index;
      }
    }
  }

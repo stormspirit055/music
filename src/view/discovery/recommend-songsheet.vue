@@ -44,7 +44,6 @@ export default {
     this.recommendList = recommend
     this.recommendList.splice(9)
     this.recommendList.unshift(defaultSheet)
-    console.log(this.recommendList)
   },
   methods: {},
   components: {},

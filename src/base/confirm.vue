@@ -34,7 +34,6 @@ export default Confirm
 let instanceCache
 
 export const confirm = function(text, title, onConfirm = () => {}) {
-  console.log('11')
   if (typeof title === 'function') {
     onConfirm = title
     title = undefined

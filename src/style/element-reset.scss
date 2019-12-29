@@ -50,6 +50,7 @@ $input-height-login: 34px;
 }
 .el-loading-mask{
   background: rgba(0 ,0, 0, .3) !important;
+  z-index: 999 !important;
   circle{
     stroke: $red !important;
   }

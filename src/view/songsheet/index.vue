@@ -16,7 +16,7 @@
       </div>
     </div>
     <SongList v-show='currentTab == 0' :songList='songList' />
-    <Comment :id='$route.params.id' v-show='currentTab == 1' />
+    <Comment :id='$route.params.id' type='sheet' v-show='currentTab == 1' />
   </div>
 </template>
 
@@ -36,7 +36,6 @@ export default {
     };
   },
   mounted(){
-    console.log(this.$el)
   },
   methods: {
     _swtichMode(mode) {

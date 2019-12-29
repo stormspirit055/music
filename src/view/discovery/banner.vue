@@ -15,7 +15,6 @@ export default {
   },
   async created() {
     const { banners } = await getBanner()
-    console.log(banners)
     this.banners = banners
   },
 }

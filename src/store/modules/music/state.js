@@ -1,5 +1,6 @@
 import storage from 'good-storage'
 export default {
+  // currentSong: storage.get('PLAY_HISTORY', [])[0],
   currentSong: {},
   currentProcess: 0,
   isPlaying: !1,
@@ -9,5 +10,6 @@ export default {
   playList: {
     list: [],
     albumId: ''
-  }
+  },
+  showPlayPanel: !1
 }

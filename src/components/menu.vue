@@ -20,7 +20,6 @@ export default {
   
   mounted(){
     search().then(res => {
-      console.log(res)
     }, e => console.error(e))
     this._handleLogin()
   },
@@ -28,7 +27,6 @@ export default {
   methods: {
     _handleLogin() {
       login({phone: 18368493566, password: '64302028'}).then(res => {
-        console.log(res)
       }, e => console.error(e))
     }
   }

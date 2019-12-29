@@ -4,7 +4,7 @@ $white: #fff;
 $gold: #e7aa5a;
 $blue: #517eaf;
 $grey: #b0b0b0;
-$font-normal-color: #888;
+$font-normal-color: #ddd;
 $font-title-color: #888;
 $menu-side-width: 200px;
 $font-size: 14px;
@@ -21,7 +21,7 @@ $font-weight-bold: 700;
 
 $font-color-transparent: rgba(255, 255, 255, 0.5);
 
-$border: 1px solid #3f3f3f;
+$border: 1px solid #666;
 
 $page-padding: 16px 32px;
 // layout
@@ -41,6 +41,7 @@ $playlist-z-index: 1001;
 $userdetail-index: 1000;
 //search
 $search-panel-z-index: 1001;
+$play-panel-z-index: 1000;
 
 //song-detail
 $song-detail-z-index: 1000;

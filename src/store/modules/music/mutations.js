@@ -21,5 +21,8 @@ export default{
   },
   setPlayList(state, list) {
     state.playList = list
+  },
+  setPlayPanelState(state, type) {
+    state.showPlayPanel = type
   }
 }

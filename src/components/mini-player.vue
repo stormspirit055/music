@@ -6,8 +6,8 @@
     <div class="w-panel">
       <div class="p-left">
         <template v-if='currentSong.name'>
-          <div class="l-img">
-            <el-image :src='$utils.generateImgurl(currentSong.picUrl, 40)'></el-image>
+          <div class="l-img" @click='_handleShowPlayPanel'>
+            <img :src='$utils.generateImgurl(currentSong.picUrl, 40)' />
             <Icon type='zhankaishangxia-1' />
           </div>
           <div class="l-info">
@@ -71,7 +71,7 @@ export default {
     this.audio.volume = this.volume
   },
   methods: {
-    ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType', 'setPlaylistState']),
+    ...mapMutations(['setCurrentProcess', 'setSongState', 'setOrderType', 'setPlaylistState', 'setPlayPanelState']),
     ...mapActions(['endSong', 'startSong', 'cleanCurrentSong']),
     updateTime(e) {
       this.setCurrentProcess(e.target.currentTime)
@@ -93,9 +93,6 @@ export default {
       const playList = this.playList.list
       const id = this.currentSong.id
       const currentIndex = playList.findIndex(v => v.id === id)
-      console.log(currentIndex)
-      console.log(playList[currentIndex])
-      console.log()
       switch(this.currentOrderKey) {
         case 'ORDER_LOOP':
           this.setCurrentProcess(0)
@@ -129,7 +126,6 @@ export default {
     },
     _isCanplay(){
       this.isSongReady = !0
-      console.log('canpaly')
     },
     _handleSwitchOrder() {
       let keys = Object.keys(playOrderMap)
@@ -140,13 +136,15 @@ export default {
       this.audio.volume = e
     },
     _handleDisplayPlaylist() {
-      console.log(this.isShowPlaylist)
       this.setPlaylistState(!this.isShowPlaylist)
+    },
+    _handleShowPlayPanel() {
+      this.setPlayPanelState(!this.showPlayPanel)
     }
   },
   components: {},
   computed: {
-    ...mapState(['currentProcess', 'isPlaying', 'currentOrderKey', 'isShowPlaylist', 'playList']),
+    ...mapState(['currentProcess', 'isPlaying', 'currentOrderKey', 'isShowPlaylist', 'playList', 'showPlayPanel']),
     ...mapGetters(['currentSong']),
     currentPercent() {
       return (this.currentProcess / this.currentSong.duration).toFixed(3)
@@ -175,6 +173,7 @@ export default {
   height: $mini-player-height;
   background: #212121;
   min-width: $layout-content-min-width;
+  z-index: $mini-player-z-index;
   .w-process{
     position: absolute;
     width: 100%;
@@ -198,6 +197,12 @@ export default {
         border-radius: 4px;
         margin-right: 10px;
         overflow: hidden;
+        cursor: pointer;
+        &:hover{
+          img{
+            filter: blur(2px);
+          }
+        }
         i{
           position: absolute;
         }

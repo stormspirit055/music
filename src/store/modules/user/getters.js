@@ -33,6 +33,6 @@ export const menuList = (state) => {
       children: collectList
     })
   }
-  console.log(retrunMenu)
+
   return retrunMenu
 }

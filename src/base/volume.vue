@@ -21,7 +21,6 @@ export default {
   mounted(){},
   methods: {
     setProcess(e) {
-      console.log(e)
       if (e == '0.00') this.isSilence = !0
       if (this.isSilence && e != '0.00') this.isSilence = !1
       storage.set('VOLUME', e)

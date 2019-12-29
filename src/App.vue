@@ -4,6 +4,7 @@
     <Layout />
     <MiniPlayer />
     <Playlist />
+    <Playpanel />
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import Layout from '@/view/layout'
 import MiniPlayer from '@/components/mini-player'
 import Playlist from '@/components/playlist'
+import Playpanel from '@/components/playpanel'
 export default {
   data () {
     return {
@@ -20,7 +22,8 @@ export default {
   components: {
     Layout,
     MiniPlayer,
-    Playlist
+    Playlist,
+    Playpanel
   },
 
   computed: {},

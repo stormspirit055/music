@@ -69,9 +69,7 @@ export default {
   methods: {
     ...mapActions(['startSong']),
     async _handlePlay(song) {
-      console.log('播放')
-      let result = await getSongDetail({ids: song.id })
-      console.log(result)
+      // let result = await getSongDetail({ids: song.id })
       this.startSong(song)
     }
   },
