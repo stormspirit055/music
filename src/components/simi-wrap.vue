@@ -2,7 +2,7 @@
   <div class='simi-wrap'>
     <div class="w-title">{{titleMap[type]}}</div>
     <div class="w-list">
-      <component  v-for='(item, index) in listData' :key='index' :is="comName" :info='item'></component>
+      <component  v-for='(item, index) in listData' :key='index' :is="comName" :type='type' :info='item'></component>
     </div>
   </div>
 </template>
@@ -11,8 +11,9 @@
 import Simisong from '@/components/simi-song'
 import Simiuser from '@/components/simi-user'
 import Simisheet from '@/components/simi-sheet'
+import Simimv from '@/components/simi-mv'
 import  { generateSong } from '@/utils'
-import { getSimiUser, getSimiSong, getSimiSheet } from '@/api'
+import { getSimiUser, getSimiSong, getSimiSheet, getSimiMv, getVideoRelated } from '@/api'
 export default {
   name:'Simiwrap',
   props: ['id', 'type'],
@@ -21,7 +22,9 @@ export default {
       titleMap: {
         user: '喜欢这首歌的人',
         song: '相似歌曲',
-        sheet: '包含这首歌的歌单'
+        sheet: '包含这首歌的歌单',
+        mv: '相关mv',
+        video: '推荐视频'
       },
       comName: '',
       listData: []
@@ -43,6 +46,14 @@ export default {
           this.comName = 'Simisheet'
           this._getSimiSheet();
           break;
+        case 'mv': 
+          this.comName = 'Simimv'
+          this._getSimiMv();
+          break;
+        case 'video': 
+          this.comName = 'Simimv'
+          this._getVideoRelated();
+          break;
       }
     },
     async _getSimiUser() {
@@ -53,6 +64,19 @@ export default {
           gender, nickname, userId, recommendReason, avatarUrl
         }
       })
+    },
+    async _getVideoRelated() {
+       let { data } = await getVideoRelated({ id: this.id })
+       data.forEach(v => {
+         v.playCount = v.playTime
+         v.cover = v.coverUrl
+         v.id = v.vid
+         v.name = v.title
+         v.artistName = v.creator[0].userName
+         v.duration = v.durationms
+       })
+       console.log(data)
+      this.listData = data
     },
     async _getSimiSong() {
       const { songs } = await getSimiSong({ id: this.id })
@@ -95,11 +119,20 @@ export default {
         }
       })
     },
+    async _getSimiMv() {
+      let { mvs } = await getSimiMv({ mvid: this.id })
+      this.listData = mvs
+    },
+    async _getSimiVideo() {
+      let result = await getVideoRelated({ id: this.id })
+      console.log(result)
+    }
   },
   components: {
     Simisheet,
     Simiuser,
-    Simisong
+    Simisong,
+    Simimv
   },
   computed: {},
   watch: {

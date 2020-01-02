@@ -35,14 +35,12 @@ $header-height: 50px;
 
 // mini-player
 $mini-player-height: 60px;
-$mini-player-z-index: 1002;
+$mini-player-z-index: 1000;
 
-//playlist
-$playlist-z-index: 1001;
 $userdetail-index: 1000;
 //search
-$search-panel-z-index: 1001;
-$play-panel-z-index: 1000;
+$search-panel-z-index: 1004;
+$play-panel-z-index: 999;
+//mv
+$mv-z-index: 1001;
 
-//song-detail
-$song-detail-z-index: 1000;

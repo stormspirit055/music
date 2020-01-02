@@ -23,53 +23,70 @@
        </div>
        <div class="r-search">
         <el-input
+          @keyup.enter.native='_handleEnter'
+          @focus="setSearchPanelState(true)"
           prefix-icon="el-icon-search"
           class='el-input-search'
           v-model="keywords">
         </el-input>
+        <Searchpanel ref='search' @updatekeywords='_handleUpdate' :keywords='keywords' />
        </div>
      </div>
-     
    </div>
  </template>
  <script>
  import Icon from '@/base/icon'
  import { mapState, mapMutations } from '@/store/helper/music'
+ import { globalMapMutations } from '@/store/helper/global'
+ import { noImpactNodeMap } from '@/config'
+ import storage from 'good-storage'
+
+ import Searchpanel from '@/components/searchpanel'
  export default {
-   data () {
-     return {
-       routeHasNext: false,
-       routeHasPrev: true,
-       keywords: '',
-       currentIndex: 0
-     };
-   },
- 
-   components: {Icon},
- 
-   computed: {
-     ...mapState(['showPlayPanel']),
-     routerList() {
-       return ['个性推荐', '歌单', '主播电台']
-     },
-   },
-   methods: {
-     ...mapMutations(['setPlayPanelState']),
-     _handleBack() {
-       this.$router.back()
-     },
-     _handleForward() {
-       this.$router.forward()
-     }
-   }
- }
+  data () {
+    return {
+      routeHasNext: false,
+      routeHasPrev: true,
+      keywords: '',
+      currentIndex: 0,
+      doms: noImpactNodeMap['SEARCH_PANEL']
+    };
+  },
+  components: { Icon, Searchpanel },
+
+  computed: { 
+    ...mapState(['showPlayPanel', ]),
+    routerList() {
+      return ['个性推荐', '歌单', '主播电台']
+    },
+  },
+  methods: {
+    ...mapMutations(['setPlayPanelState', 'setSearchPanelState']),
+    ...globalMapMutations(['updateSearchHistory']),
+    _handleUpdate(e) {
+      this.keywords = e
+    },
+    async _handleEnter() {
+      if (!this.keywords.trim() || this.keywords == this.$route.params.keywords) return 
+      this.setSearchPanelState(!1)
+      this.$router.push(`/searchpage/${this.keywords}`) 
+    },
+    _handleBack() {
+      this.$router.back()
+    },
+    _handleForward() {
+      this.$router.forward()
+    },
+  }
+}
  
  </script>
  <style lang='scss' rel='stylesheet/scss' scoped>
  .layoutHeader-wrap{
    position: relative;
    display: flex;
-   z-index: $mini-player-z-index;
+   z-index: $search-panel-z-index;
+   min-width: $layout-content-min-width;
    .showPanel{
      background: #262626 !important;
    }
@@ -151,8 +168,9 @@
          }
        }
      }
-     .r-search{
-     }
+    .r-search{
+    }
+    
    }
  }
  </style>

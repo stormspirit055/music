@@ -25,5 +25,8 @@ export default{
   },
   setPlayPanelState(state, type) {
     state.showPlayPanel = type
+  },
+  setSearchPanelState(state, type) {
+    state.isShowSearchPanel = type
   }
 }

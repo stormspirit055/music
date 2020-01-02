@@ -11,8 +11,8 @@
           <Playbtn class='l-play' />
         </div>
         <div class="i-middle">
-          <Icon type='laba'  v-if='false' />
-          <span>{{index + 1 | addZero}}</span>
+          <Icon type='laba1' :size='12'  v-if='currentSong.id == item.id' />
+          <span v-else>{{index + 1 | addZero}}</span>
         </div>
         <div class="i-right">
           <div class="r-name">{{item.name}}</div>
@@ -31,7 +31,7 @@
 <script>
 import { getNewRecommendSongs, getSongDetail, getSongUrl } from '@/api'
 import { generateSong } from '@/utils'
-import { mapActions } from '@/store/helper/music'
+import { mapActions, mapState } from '@/store/helper/music'
 export default {
   data () {
     return {
@@ -73,8 +73,12 @@ export default {
       this.startSong(song)
     }
   },
-  components: {},
-  computed: {},
+  components: {
+    
+  },
+  computed: {
+    ...mapState(['currentSong'])
+  },
   filters: {
     addZero(v) {
       if (v < 10) return '0' + v
@@ -142,6 +146,9 @@ export default {
         color: $font-normal-color;
         font-size: $font-size-sm;
         margin-right: 8px;
+        i{
+          color: $red !important;
+        }
       }
       .i-right{
         height: 60px;

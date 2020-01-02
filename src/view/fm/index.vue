@@ -1,16 +1,27 @@
 <template>
-  <div></div>
+  <div>
+    私人fm
+  </div>
 </template>
 
 <script>
+import { getFm } from '@/api'
 export default {
+  name: 'Fm',
   data () {
     return {
     };
   },
 
-  mounted(){},
-  methods: {},
+  mounted(){
+    this._initData()
+  },
+  methods: {
+    async _initData() {
+      const result = await getFm()
+      console.log(result)
+    }
+  },
   components: {},
   computed: {},
 }

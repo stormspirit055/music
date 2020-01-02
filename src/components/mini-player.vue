@@ -8,7 +8,7 @@
         <template v-if='currentSong.name'>
           <div class="l-img" @click='_handleShowPlayPanel'>
             <img :src='$utils.generateImgurl(currentSong.picUrl, 40)' />
-            <Icon type='zhankaishangxia-1' />
+            <Icon canBubble type='zhankaishangxia-1' />
           </div>
           <div class="l-info">
             <div class="i-name">
@@ -23,8 +23,8 @@
         <Icon class='m-like' type='main_girl' />
         <Icon class='m-prev' @click='_handleSwitchSong("prev")' type='shangyishou' :size='24' />
         <div class="m-play" @click='_switchState'>
-          <Icon type='bofang' v-if='!isPlaying' />
-          <Icon type='zantingtingzhi' v-else />
+          <Icon type='bofang' canBubble v-if='!isPlaying' />
+          <Icon type='zantingtingzhi' canBubble v-else />
         </div>
         <Icon class='m-prev rotate' @click='_handleSwitchSong("next")' type='shangyishou' :size='24' />
         <Icon type='fenxiang' class='m-share'  :size='16' />
@@ -90,7 +90,6 @@ export default {
           nextSong = playList[randomIndex]
         } else {
           currentIndex += failIndex
-          console.log(currentIndex)
           nextSong = currentIndex === playList.length - 1 ? playList[0] : playList[currentIndex + 1]
         }
       }
@@ -122,25 +121,36 @@ export default {
     _handleEnded() {
       const playList = this.playList.list
       const id = this.currentSong.id
-      const currentIndex = playList.findIndex(v => v.id === id)
+      let currentIndex = playList.findIndex(v => v.id === id)
       switch(this.currentOrderKey) {
         case 'ORDER_LOOP':
           this.setCurrentProcess(0)
           // this.startSong(playList[currentIndex])
           break;
         case 'ORDER_SEQUENCE':
+          currentIndex += failIndex
           if (currentIndex + 1 < playList.length) {
-            this.startSong(playList[currentIndex + 1])
+            this.startSong(playList[currentIndex + 1]).then(res => {
+              if(res == false) {
+                this._handleEnded()
+              }
+            })
           } else {
             this.cleanCurrentSong()
             return
           }
           break;
         case 'ORDER_LIST':
+          currentIndex += failIndex
           if (currentIndex + 1 < playList.length) {
             this.startSong(playList[currentIndex + 1])
           } else {
-            this.startSong(playList[0])
+            this.startSong(playList[0]).then(res => {
+              if (res == false) {
+                failIndex++
+                this._handleEnded()
+              }
+            })
           }
           break;
         case 'ORDER_RANDOM':
@@ -148,7 +158,11 @@ export default {
           while(randomIndex === currentIndex) {
             randomIndex = Math.floor(Math.random() * playList.length)
           }
-          this.startSong(playList[randomIndex])
+          this.startSong(playList[randomIndex]).then(res => {
+            if(res == false) {
+              this._handleEnded()
+            }
+          })
           break;
       }
       // this.endSong(this.currentSong.id)

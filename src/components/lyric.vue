@@ -64,8 +64,13 @@ export default {
   },
   methods: {
     async _getSongLyric() {
-      let { lrc } = await getSongLyric({ id: this.id })
-      this.lyricDetail = this._parseLyric(lrc.lyric)
+      let result = await getSongLyric({ id: this.id })
+      if (!result.lrc) {
+        this.lyricDetail = [{time: 0, text:'无歌词'}]
+      } else {
+        console.log(result)
+        this.lyricDetail = this._parseLyric(result.lrc.lyric)
+      }
     },
     _parseLyric(lyric) {
         lyric = lyric.split('\n')
@@ -99,8 +104,6 @@ export default {
   },
   watch: {
     currentLineNum(newV) {
-      console.log(newV)
-      console.log(this.scroll)
       newV !== -1 &&  this.scroll &&  this.scroll.scrollToElement('.line' + newV, 200, 0, true)
     },
     id: {
@@ -113,7 +116,6 @@ export default {
     },
     lyricDetail: {
       handler(newV) {
-        console.log(newV)
         if (!newV.length) return
           this.$nextTick(() => {
               this.scroll = new BScroll('.w-lyric', {

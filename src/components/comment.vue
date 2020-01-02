@@ -1,19 +1,24 @@
 <template>
   <div class='comment-wrap' v-if='id' ref='wrap' >
-    <div class='block' v-if='pageNum == 1'>
-      <div class="w-title">精彩评论</div>
-      <Commentlist  :comments='hotComments'  />
+    <div v-if='comments.length'>
+      <div class='block' v-if='pageNum == 1 && hotComments.length'>
+        <div class="w-title">精彩评论</div>
+        <Commentlist  :comments='hotComments'  />
+      </div>
+      <div class='block'>
+        <div class='w-title'>最新评论 ({{total}})</div>
+        <Commentlist  :comments='comments'  />
+      </div>
     </div>
-    <div class='block'>
-      <div class='w-title'>最新评论 ({{total}})</div>
-      <Commentlist  :comments='comments'  />
+    <div class="w-empty" v-else>
+      还没有评论~
     </div>
     <Pagination @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize'></Pagination>
   </div>
 </template>
 
 <script>
-import { getSongSheetComment, getSongComment } from '@/api'
+import { getSongSheetComment, getSongComment, getVideoComment, getMvComment } from '@/api'
 import Pagination from '@/base/pagination'
 import Commentlist from '@/base/comment-list'
 export default {
@@ -40,15 +45,29 @@ export default {
   methods: {
     async _getData() {
       let result
-      if (this.type == 'sheet') {
-        result = await getSongSheetComment({id: this.id, offset: (this.pageNum - 1) * 20} )
-      } else if (this.type == 'song') {
-        result = await getSongComment({id: this.id, offset: (this.pageNum - 1) * 20} )
+      const params = {id: this.id, offset: (this.pageNum - 1) * 20}
+      switch(this.type) {
+        case 'sheet':
+          result = await getSongSheetComment(params)
+          break;
+        case 'song': 
+          result = await getSongComment(params)
+          break;
+        case 'video':
+          result = await getVideoComment(params)
+          break;
+        case 'mv':
+          result = await getMvComment(params)
+          break;
+        case 'album': 
+          result = await getAlbumComment(params)
+          break;
       }
       const { hotComments, comments, total } =  result
       this.total = total
       this.comments = this._generateComment(comments)
       if (this.pageNum == 1) this.hotComments = this._generateComment(hotComments)
+      console.log(this.hotComments)
     },
     _generateComment(list) {
       return list.map(v => {
@@ -100,6 +119,12 @@ export default {
       font-size: $font-size;
       color: $font-normal-color;
     }
+  }
+  .w-empty{
+    color: $red;
+    position: relative;
+    margin-top: 50px;
+    text-align: center;
   }
 }
 </style>

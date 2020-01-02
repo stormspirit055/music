@@ -1,8 +1,8 @@
 <template>
   <div class='songlist-wrap'>
     <el-table
-      v-loading='!filterSongList.length'
-      empty-text=' '
+      v-loading='loading'
+      v-if='filterSongList.length'
       :highlight-current-row='false'
       :data="filterSongList"
       :row-class-name="tableRowClassName"
@@ -17,28 +17,32 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="name"
         label="音乐标题"
       >
+      <template slot-scope='scope'>
+        <Highlight :keywords='keywords' :text='scope.row.name' />
+      </template>
       </el-table-column>
       <el-table-column
         label="歌手"
-        width='200px'
+        width='175px'
         class='c-limit'
       >
         <template slot-scope='scope'>
           <div class='c-limit'>
-            <span class='c-pointer' v-for='(item, index) in scope.row.artists' :key='index'>{{item.name +( index !== scope.row.artists.length - 1 ?  ' / ' : '')}}</span>
+            <span class='c-pointer' v-for='(item, index) in scope.row.artists' :key='index'>
+              <Highlight :keywords='keywords' :text="item.name +( index !== scope.row.artists.length - 1 ?  ' / ' : '')" />
+            </span>
           </div>
         </template>
       </el-table-column>
       <el-table-column
-        width='200px'
+        width='175px'
         label="专辑名称"
       >
         <template slot-scope='scope'>
           <div class='c-limit'>
-            <span class='c-pointer'>{{scope.row.albumName}}</span>
+            <span class='c-pointer'><Highlight :keywords='keywords' :text='scope.row.albumName' /></span>
           </div>
         </template>
       </el-table-column>
@@ -50,17 +54,38 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="w-emtpy" v-if='filterSongList.length == 0 && loading == false'>
+      未能找到与'<span style='color: '>{{keywords}}</span>'相关的歌曲
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapMutations } from '@/store/helper/music'
-
+const filterKey = ['name', 'artistsText', 'albumName']
 export default {
   name: 'SongList',
-  props: ['songList'],
+  props: {
+    songList: {
+      type: Array,
+      default: []
+    },
+    keywords: {
+      type: String,
+      default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    isFilter: {
+      type: Boolean,
+      default: true
+    }
+  },
   data () {
     return {
+     
     };
   },
   mounted(){
@@ -108,7 +133,17 @@ export default {
   computed: {
     ...mapState(['playList', 'currentSong', 'isPlaying']),
     filterSongList() {
-      return this.songList
+      if (this.isFilter) {
+        return this.songList.filter(line => {
+          let mark = false
+          filterKey.forEach(v => {
+            if (line[v].indexOf(this.keywords) > -1 ) mark = true
+          })
+          return mark
+        })
+      } else {
+        return this.songList
+      }
     }
   },
   filters: {
@@ -120,6 +155,7 @@ export default {
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
 .songlist-wrap{
+  min-width: $layout-content-min-width;
   .el-table{
     &::before{
       background-color: #212121 !important;
@@ -167,6 +203,10 @@ export default {
        .cell{
          height: 26px;
          line-height: 26px;
+         min-width: 175px;
+         @include limit-line(1);
+         padding-left: 10px;
+         box-sizing: border-box;
        }
        .c-pointer{
          cursor: pointer;
@@ -182,6 +222,15 @@ export default {
        }
      }
    } 
+  }
+  .w-emtpy{
+    position: relative;
+    text-align: center;
+    margin-top: 50px;
+    color: $grey;
+    span{
+      color: $red;
+    }
   }
 }
 </style>

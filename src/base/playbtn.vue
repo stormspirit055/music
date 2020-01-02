@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class='playbtn-wrap' :style='style'>
-    <Icon type='right' color='red' />
+    <Icon type='right' canBubble color='red' />
   </div>
 </template>
 

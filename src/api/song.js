@@ -17,3 +17,9 @@ export const getSimiSheet = (params) => request.get('/simi/playlist', { params})
 export const getSimiSong = (params) => request.get('/simi/song', { params})
 // 获取最近5个听了这首歌的用户
 export const getSimiUser = (params) => request.get('/simi/user', { params})
+// 热门搜索
+export const getHotSearch = (params) => request.get('/search/hot', { params})
+// 专辑评论
+export const getAlbumComment = (params) => request.get('/comment/album', { params})
+// 私人fm
+export const getFm = () => request.get('/personal_fm')

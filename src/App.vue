@@ -13,9 +13,11 @@ import Layout from '@/view/layout'
 import MiniPlayer from '@/components/mini-player'
 import Playlist from '@/components/playlist'
 import Playpanel from '@/components/playpanel'
+import img from '@/assets/default_avatar.jpg'
 export default {
   data () {
     return {
+      img
     };
   },
 
@@ -33,7 +35,7 @@ export default {
   methods: {}
 }
 </script>
-<style>
+<style lang='scss'>
 #app {
   height: 100%;
 }

@@ -13,6 +13,7 @@
 <script>
 import { Pagination } from 'element-ui'
 export default {
+  name: 'Pagination',
   props: ['total', 'pageSize'],
   data () {
     return {
@@ -35,6 +36,7 @@ export default {
 .pagination-wrap{
   position: relative;
   text-align: center;
+  margin: 20px 0 30px;
   /deep/.el-pagination{
     button{
       background-color: rgba(0,0,0,0) !important;

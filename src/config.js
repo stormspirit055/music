@@ -18,5 +18,5 @@ export const playOrderMap = {
 }
 export const noImpactNodeMap = {
   'PLAY_LIST': ['.mini-player-wrap'],
-  'SEARCH_PANEL': ['']
+  'SEARCH_PANEL': ['.r-search']
 }

@@ -71,6 +71,11 @@ export default {
     padding-left: 18px;  
     cursor: pointer;
     height: 34px;
+    width: 190px;
+    line-height: 34px;
+    @include limit-line(1);
+    padding-right: 10px;
+    box-sizing: border-box;
     &:hover{
       background: #2a2a2a;
     }

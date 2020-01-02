@@ -11,5 +11,6 @@ export default {
     list: [],
     albumId: ''
   },
-  showPlayPanel: !1
+  showPlayPanel: !1,
+  isShowSearchPanel: !1
 }

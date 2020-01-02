@@ -11,6 +11,10 @@ export default {
       type: String,
       required: true
     },
+    canBubble: {
+      default: false,
+      type: Boolean
+    },
     color: {
       type: String
     }
@@ -33,7 +37,8 @@ export default {
       }
       return iconClass
     },
-    _handleClick() {
+    _handleClick(e) {
+      if (!this.canBubble) e.cancelBubble=true
       this.$emit('click')
     },
     getIconStyle() {
