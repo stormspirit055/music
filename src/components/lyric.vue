@@ -68,7 +68,6 @@ export default {
       if (!result.lrc) {
         this.lyricDetail = [{time: 0, text:'无歌词'}]
       } else {
-        console.log(result)
         this.lyricDetail = this._parseLyric(result.lrc.lyric)
       }
     },

@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-  <div class='recommend-ss-wrap'>
+  <div class='recommend-ss-wrap' v-if='recommendList.length'>
     <div class="w-title">
       推荐歌单
       <Icon type='iconfontyoujiantou-copy-copy-copy-copy-copy' :size='14' />

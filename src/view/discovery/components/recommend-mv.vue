@@ -1,23 +1,11 @@
 <template>
-  <div class='recommend-mv-wrap'>
+  <div class='recommend-mv-wrap' v-if='mvList.length'> 
     <div class="w-title">
       推荐mv
       <Icon type='iconfontyoujiantou-copy-copy-copy-copy-copy' :size='14' />
     </div>
     <div class="w-list">
-      <div class="l-item" v-for='(item, index) in mvList' :key='index'>
-        <div class="i-innerwrap">
-          <div class="i-desc">{{item.copywriter}}</div>
-          <img class='i-img'  v-lazy='$utils.generateImgurl(item.picUrl, 220, 126)' />
-          <div class="i-num" > 
-            <Icon type='bofang-' :size='12' />
-            {{item.playCount | countFilter}}
-          </div>
-          <Playbtn class='i-play' />
-        </div>
-        <div class="i-name">{{item.name}}</div>
-        <div class="i-author">{{item.artistName}}</div>
-      </div>
+      <Mvitem :item='item' v-for='(item, index) in mvList' :key='index' />
     </div>
   </div>
 </template>
@@ -33,6 +21,13 @@ export default {
 
   async created(){
     let { result } = await getRecommendMv()
+    result.forEach(v => {
+      v.playTime = v.playCount
+      v.durationms = v.duration
+      v.mode = 'mv'
+      v.coverUrl = v.picUrl
+      v.title = v.name
+    })
     this.mvList = result
   },
   methods: {},

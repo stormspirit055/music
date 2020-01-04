@@ -17,9 +17,9 @@
      </div>
      <div class="w-right" :class='{showPanel:showPlayPanel}'>
        <div class="r-router">
-          <div class="r-item" :class='currentIndex == index ? "active" : "default"' v-for='(item, index) in routerList' :key='index'>
-            {{item}}
-          </div>
+          <router-link tag='div' :to='item.path' class="r-item default" active-class='active' v-for='(item, index) in children' :key='index'>
+            {{item.meta.title}}
+          </router-link>
        </div>
        <div class="r-search">
         <el-input
@@ -40,7 +40,7 @@
  import { globalMapMutations } from '@/store/helper/global'
  import { noImpactNodeMap } from '@/config'
  import storage from 'good-storage'
-
+import { menuRoutes } from '@/router'
  import Searchpanel from '@/components/searchpanel'
  export default {
   data () {
@@ -53,12 +53,26 @@
     };
   },
   components: { Icon, Searchpanel },
-
+  mounted() {
+    console.log(menuRoutes)
+    console.log(this.$route.path.split('/')[1])
+      // console.log(route)
+  },
   computed: { 
     ...mapState(['showPlayPanel', ]),
     routerList() {
       return ['个性推荐', '歌单', '主播电台']
     },
+    children() {
+      const current = menuRoutes.find(v => v.path === '/' + this.$route.path.split('/')[1])
+      if (current && current.children && current.children.length)  {
+        console.log(current.children)
+        return current.children.slice(1)
+      } else {
+        return []
+      }
+      
+    }
   },
   methods: {
     ...mapMutations(['setPlayPanelState', 'setSearchPanelState']),
@@ -77,7 +91,7 @@
     _handleForward() {
       this.$router.forward()
     },
-  }
+  },
 }
  
  </script>
@@ -164,7 +178,7 @@
            color: #eee !important;
          }
          &.default{
-           color: $grey !important;
+           color: $grey ;
          }
        }
      }

@@ -1,7 +1,9 @@
 import Router from 'vue-router'
 import Vue from 'vue'
-import Discovery from '@/view/discovery'
+import Discoveryindex from '@/view/discovery'
+import Discovery from '@/view/discovery/recommend'
 import Fm from '@/view/fm'
+import Videos from '@/view/videos'
 import SongSheet from '@/view/songsheet'
 import SearchPage from '@/view/searchpage'
 import Timeline from '@/view/timeline'
@@ -13,16 +15,65 @@ import searchArtists from '@/view/searchpage/artists'
 import searchRadios from '@/view/searchpage/radios'
 import searchUsers from '@/view/searchpage/users'
 import searchSongsheet from '@/view/searchpage/songsheet'
+
+import DiscSongsheet from '@/view/discovery/songsheet'
+import DiscNewmusic from '@/view/discovery/newmusic'
+import DiscRadios from '@/view/discovery/radios'
+import DiscRank from '@/view/discovery/rank'
+import DiscSinger from '@/view/discovery/singer'
+
 Vue.use(Router)
 export const menuRoutes = [
   {
     path: '/discovery',
+    component: Discoveryindex,
     name: 'discovery',
-    component: Discovery,
     meta: {
       title: '发现音乐',
       icon: 'yinle1',
     },
+    children: [
+      {
+        path: '/',
+        redirect: 'recommend',
+      },
+      {
+        path: 'recommend',
+        name: 'discrecommend',
+        component: Discovery,
+        meta: { title: '个性推荐' }
+      },
+      {
+        path: 'songsheet',
+        name: 'discsongsheet',
+        component: DiscSongsheet,
+        meta: { title: '歌单' }
+      },
+      {
+        path: 'radios',
+        name: 'discradios',
+        component: DiscRadios,
+        meta: { title: '主播电台' }
+      },
+      {
+        path: 'rank',
+        name: 'discrank',
+        component: DiscRank,
+        meta: { title: '排行榜' }
+      },
+      {
+        path: 'singer',
+        name: 'discsinger',
+        component: DiscSinger,
+        meta: { title: '歌手' }
+      },
+      {
+        path: 'newmusic',
+        name: 'discnewmusic',
+        component: DiscNewmusic,
+        meta: { title: '最新音乐' }
+      },
+    ]
   },
   {
     path: '/fm',
@@ -36,7 +87,7 @@ export const menuRoutes = [
   {
     path: '/video',
     name: 'video',
-    component: Discovery,
+    component: Videos,
     meta: {
       title: '视频',
       icon: 'shipin',
@@ -55,22 +106,6 @@ export const menuRoutes = [
 const router = new Router({
   routes: [
     ...menuRoutes,
-    {
-      path: '/',
-      redirect: 'discovery',
-    },
-    {
-      path: '/discovery',
-      component: Discovery,
-      name: 'Discovery',
-      meta: {title: '发现音乐'}
-    },
-    {
-      path: '/timeline',
-      component: Timeline,
-      name: 'timeline',
-      meta: {title: '动态'}
-    },
     {
       path: '/songsheet/:id',
       component: SongSheet,

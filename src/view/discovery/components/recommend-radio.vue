@@ -1,5 +1,5 @@
 <template>
-  <div class='recommend-radio-wrap'>
+  <div class='recommend-radio-wrap' v-if='radioList.length'>
     <div class="w-title">
       主播电台
       <Icon type='iconfontyoujiantou-copy-copy-copy-copy-copy' :size='14' />

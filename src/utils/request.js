@@ -22,15 +22,12 @@ function createBaseInstance() {
       })
     }
   }, error => {
-    console.log('chuowu ')
     console.log(error.response)
     Notification({
       title: '提示',
       message: error.response.data.msg ||  error.response.data.message,
       type: 'error'
     })
-    // throw error
-    // return Promise.reject(error.response)
   })
   return instance
 }

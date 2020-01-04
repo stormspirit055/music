@@ -29,3 +29,6 @@ export function toRem(px) {
 export function toCurrentRem(px) {
   return `${px / htmlFontSize}rem`
 }
+export function toCurrentPx(px) {
+  return `${px * htmlFontSize / remBase}`
+}

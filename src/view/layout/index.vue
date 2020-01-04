@@ -4,7 +4,7 @@
     <LayoutHeader />
     <div class="w-body">
       <LayoutMenu />
-      <div class="b-view">
+      <div class="b-view" ref='wrap'>
         <router-view></router-view>
       </div>
     </div>
@@ -23,12 +23,13 @@ export default {
     LayoutHeader,
     LayoutMenu,
   },
-
+  mounted() {
+    
+  },
   computed: {},
-
-  mounted(){},
-
-  methods: {}
+  methods: {
+    
+  }
 }
 
 </script>
@@ -41,8 +42,8 @@ export default {
     height: calc(100% - #{$layout-header-height});
     .b-view{
       flex: 1;
-      overflow-y: auto;
       min-width: $layout-content-min-width;
+      overflow-y: auto;
       margin-bottom: $mini-player-height;
       background: #212121;
     }
