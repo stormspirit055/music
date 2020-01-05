@@ -5,6 +5,7 @@
       background
       :pageSize="pageSize"
       :total="total"
+      :current-page='pageNum'
       layout="prev, pager, next"
     ></el-pagination>
   </div>
@@ -14,7 +15,7 @@
 import { Pagination } from 'element-ui'
 export default {
   name: 'Pagination',
-  props: ['total', 'pageSize'],
+  props: ['total', 'pageSize', 'pageNum'],
   data () {
     return {
     };

@@ -8,3 +8,7 @@ export const getSimiSheet = (params) => request.get('/simi/playlist', { params})
 export const getSongSheetDetail = (params) => request.get('/playlist/detail', { params})
 // 获取精品歌单
 export const getQualitySongSheet = (params) => request.get('/top/playlist/highquality', { params})
+// 获取歌单分类
+export const getSongSheetClass = (params) => request.get('/playlist/hot', { params})
+// 获取热门歌单
+export const getTopSheet = (params) => request.get('/top/playlist', { params})
