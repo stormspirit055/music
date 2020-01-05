@@ -1,7 +1,7 @@
 <template>
   <div class='songsheet-wrap'>
     <div class="w-list">
-      <div class="l-item" v-for='(item ,index) in playlists' :key='index'>
+      <router-link tag='div' :to="'/songsheet/' + item.id" class="l-item" v-for='(item ,index) in playlists' :key='index'>
         <div class="i-left">
           <img class='i-avatar' v-if='item.coverImgUrl' v-lazy="$utils.generateImgurl(item.coverImgUrl, 60)" alt="">
           <img class='i-avatar' v-if='!item.coverImgUrl' src='/src/assets/default_avatar.jpg' alt="">
@@ -13,7 +13,7 @@
           <div class="r-count">{{item.trackCount}}首</div>
           <div class="r-creater">by {{item.creator.nickname}}</div>
         </div>
-      </div>
+      </router-link>
     </div>
     <Pagination v-if='total > pageSize' @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize' />
   </div>

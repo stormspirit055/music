@@ -19,3 +19,5 @@ export const getAlbumComment = (params) => request.get('/comment/album', { param
 export const getFm = () => request.get('/personal_fm')
 // 私人fm跳下一首
 export const getFmNext = () => request.get('/personal/fm/skip' )
+// 新歌速递
+export const getTopsong = (params) => request.get('/top/song', { params} )

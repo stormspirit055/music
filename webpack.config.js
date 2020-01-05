@@ -6,7 +6,7 @@ const webpack = require('webpack')
 module.exports = {
   mode: 'development',
   entry: './src/main.js',
-  devtool: 'source-map',
+  // devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js'
@@ -44,7 +44,7 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
-      { test: /\.(eot|woff|ttf)$/, loader: 'file-loader' },
+      // { test: /\.(eot|woff|ttf)$/, loader: 'file-loader' },
       {
         test: /\.css$/i,
         //style-loader 将生成的css 内容挂载到页面的head部分
@@ -53,7 +53,7 @@ module.exports = {
       },
       {
         // 正则匹配所有以.png,jpg,gif结尾的文件
-        test: /\.(png|jpg|gif|jpeg)$/,
+        test: /\.(png|jpg|gif|jpeg|eot|woff|ttf)$/,
         // 使用url-loader对图片进行处理
         use: [
           {

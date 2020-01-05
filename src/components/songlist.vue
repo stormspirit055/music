@@ -1,6 +1,7 @@
 <template>
   <div class='songlist-wrap'>
     <el-table
+      :show-header='isShowHead'
       v-loading='loading'
       v-if='filterSongList.length'
       :highlight-current-row='false'
@@ -21,7 +22,7 @@
         v-if='isShowCover'
       >
         <template slot-scope='scope'>
-          <div class="c-cover">
+          <div class="c-cover" @click='_handleDbclick(scope.row)'>
             <img v-lazy="$utils.generateImgurl(scope.row.picUrl, 60)" alt="" class="c-img">
             <Playbtn :size='24' />
           </div>
@@ -68,7 +69,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="w-emtpy" v-if='filterSongList.length == 0 && loading == false'>
+    <div class="w-emtpy" v-if='filterSongList.length == 0 && loading == false && isShowEmpty'>
       未能找到与'<span style='color: '>{{keywords}}</span>'相关的歌曲
     </div>
   </div>
@@ -101,6 +102,10 @@ export default {
       default: false
     },
     isShowHead: {
+      type: Boolean,
+      default: true
+    },
+    isShowEmpty: {
       type: Boolean,
       default: true
     }

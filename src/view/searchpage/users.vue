@@ -104,10 +104,12 @@ export default {
       }
       .i-identify{
         position: absolute;
+        width: 150px;
+        @include limit-line(1);
         right: 40px;
         top: 50%;
         margin-top: -6px;
-        @include text-vertical-center($font-size-sm);
+        font-size: $font-size-sm;
         color: $grey;
       }
     }

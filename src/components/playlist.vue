@@ -29,7 +29,7 @@
             <el-table-column
               prop="name"
               :label="'总' + list.length + '首'"
-              width="215">
+              >
               <template slot-scope='scope'>
                 <span :class='{red: scope.row.id === currentSong.id}'>{{scope.row.name}}</span>
               </template>
@@ -155,6 +155,7 @@ export default {
     .w-table-wrap{
       flex: 1;
       overflow-y: overlay;
+      width: 100%;
       .el-table{
         .c-playstate{
           color: $red;

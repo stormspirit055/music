@@ -3,7 +3,8 @@ import { Notification } from 'element-ui'
 export const request = createBaseInstance()
 function createBaseInstance() {
   const instance = axios.create({
-    baseURL: '/netease-api',
+    // baseURL: '/netease-api',
+    baseURL: 'http://47.98.146.129:3000/',
     withCredentials: true
   })
   instance.interceptors.request.use((config) => {

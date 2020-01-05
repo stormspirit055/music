@@ -3,7 +3,7 @@
   <div class='playpanel-wrap' :class='{active: showPlayPanel}'>
     <div class="w-songdetail">
       <div class="s-cd">
-        <img class='c-bar' :class='{playing: isPlaying}' src="/src/assets/play-bar.png" alt="">
+        <img class='c-bar' :class='{playing: isPlaying}' :src="playBar" alt="">
         <div class="c-support">
           <img :class='{paused: !isPlaying}' :src="$utils.generateImgurl(currentSong.picUrl, 133)" alt="">
         </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import playBar from '@/assets/play-bar.png'
 import { mapState } from '@/store/helper/music'
 import Lyric from '@/components/lyric'
 import Comment from '@/components/comment'
@@ -33,6 +34,7 @@ export default {
   name: 'Playpanel',
   data () {
     return {
+      playBar
     };
   },
 
