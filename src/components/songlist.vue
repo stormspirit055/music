@@ -17,10 +17,24 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="80px"
+        v-if='isShowCover'
+      >
+        <template slot-scope='scope'>
+          <div class="c-cover">
+            <img v-lazy="$utils.generateImgurl(scope.row.picUrl, 60)" alt="" class="c-img">
+            <Playbtn :size='24' />
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column
         label="音乐标题"
       >
       <template slot-scope='scope'>
-        <Highlight :keywords='keywords' :text='scope.row.name' />
+        <div class='c-name'>
+          <Highlight :keywords='keywords' :text='scope.row.name' />
+          <Icon @click='_goMv(scope.row.mvid)' type='MV-' v-if='scope.row.mvid' :size='12' />
+        </div>
       </template>
       </el-table-column>
       <el-table-column
@@ -81,6 +95,14 @@ export default {
     isFilter: {
       type: Boolean,
       default: true
+    },
+    isShowCover: {
+      type: Boolean,
+      default: false
+    },
+    isShowHead: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -104,6 +126,7 @@ export default {
       }
     },
     _playAll(e) {
+      console.log(e)
       if (e !== this.playList.albumId) {
         this.setPlayList({
           albumId: e,
@@ -126,6 +149,9 @@ export default {
       } else {
         return 'odd-row'
       }
+    },
+    _goMv(id) {
+      this.$router.push(`/mv?type=mv&id=${id}`)
     }
   },
   components: {
@@ -201,8 +227,8 @@ export default {
          background-color: #252525 !important;
        }
        .cell{
-         height: 26px;
-         line-height: 26px;
+        //  height: 26px;
+        //  line-height: 26px;
          min-width: 175px;
          @include limit-line(1);
          padding-left: 10px;
@@ -219,6 +245,31 @@ export default {
        }
        .c-limit{
          @include limit-line(1);
+       }
+       .c-cover{
+         position: relative;
+         width: 60px;
+         height: 60px;
+         @include flex-center();
+         cursor: pointer;
+         border-radius: 4px;
+         overflow: hidden;
+         .c-img{
+           position: absolute;
+           width: 100%;
+           height: 100%;
+           left: 0;
+           top: 0;
+         }
+       }
+       .c-name{
+         display: flex;
+         align-items: center;
+         i{
+           color: $red !important;
+           margin-left: 4px;
+           cursor: pointer;
+         }
        }
      }
    } 

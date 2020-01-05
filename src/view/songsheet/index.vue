@@ -64,6 +64,7 @@ export default {
         }
       } = data
       this.headInfo = {
+        id,
         coverImgUrl,
         createTime,
         name,

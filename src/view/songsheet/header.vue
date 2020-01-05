@@ -39,7 +39,7 @@ export default {
   mounted(){},
   methods: {
     _handlePlayAll() {
-
+      console.log(this.headInfo)
       this.$bus.emit('PLAY_ALL', this.headInfo.id)
     }
   },
