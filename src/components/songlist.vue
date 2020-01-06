@@ -10,7 +10,7 @@
       @row-dblclick="_handleDbclick"
       style="width: 100%">
       <el-table-column
-        width="50px"
+        :width='$utils.toCurrentPx(50)'
       >
         <template slot-scope='scope'>
           <span v-if='currentSong.id != scope.row.id'>{{scope.$index + 1 | addZero}}</span>
@@ -18,7 +18,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width="80px"
+        :width='$utils.toCurrentPx(80)'
         v-if='isShowCover'
       >
         <template slot-scope='scope'>
@@ -40,7 +40,7 @@
       </el-table-column>
       <el-table-column
         label="歌手"
-        width='175px'
+        :width='$utils.toCurrentPx(175)'
         class='c-limit'
       >
         <template slot-scope='scope'>
@@ -52,7 +52,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width='175px'
+      :width='$utils.toCurrentPx(175)'
         label="专辑名称"
       >
         <template slot-scope='scope'>
@@ -62,7 +62,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        width='150px'
+      :width='$utils.toCurrentPx(150)' 
         label="时长">
          <template slot-scope='scope'>
            {{$utils.filterProcessTime(scope.row.duration)}}

@@ -21,7 +21,7 @@ import DiscNewmusic from '@/view/discovery/newmusic'
 import DiscRadios from '@/view/discovery/radios'
 import DiscRank from '@/view/discovery/rank'
 import DiscSinger from '@/view/discovery/singer'
-
+import  store  from '@/store'
 Vue.use(Router)
 export const menuRoutes = [
   {
@@ -174,8 +174,16 @@ const router = new Router({
     }
   ]
 })
+
 router.beforeEach((to, from, next) => {
-  console.log(to)
+  if (to.name === 'mv') {
+    // const func = {
+    //   ...mapMutations(['setSongState'])
+    // }
+    console.log(store)
+    store.commit('music/setSongState', false)
+    // console.log(mutations)
+  }
   next()
   // ...
 })

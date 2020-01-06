@@ -22,8 +22,13 @@ export default {
     };
   },
 
+
+
+
+
+
+
   mounted(){
-    
   },
   methods: {
     async _initData() {
