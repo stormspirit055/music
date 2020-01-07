@@ -185,7 +185,10 @@ export default {
           this.startSong(line);
           break;
         case 'mvs' :
-          this.$router.push({ path: '/mv', query: { id: line.id, type: 'mv' }})
+          this.$router.push({ path: '/mvdetail', query: { id: line.id, type: 'mv' }})
+          break;
+        case 'albums' :
+          this.$router.push({ path: `/songsheet/${line.id}`, query: { type: 'album' }})
           break;
       }
       this.setSearchPanelState(false)

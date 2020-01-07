@@ -3,11 +3,11 @@
     <img class='w-cover' v-lazy='$utils.generateImgurl(headInfo.coverImgUrl, 200)' />
     <div class="w-info">
       <div class="i-name">
-        <div class="n-tag">歌单</div>
+        <div class="n-tag">{{type === 'songsheet' ? "歌单" : '专辑'}}</div>
         <span class="n-name">{{headInfo.name}}</span>
       </div>
       <div class="i-creator">
-        <img class='c-avatar' v-lazy='$utils.generateImgurl(headInfo.avatarUrl, 25)'>
+        <img class='c-avatar' v-if='headInfo.avatarUrl' v-lazy='$utils.generateImgurl(headInfo.avatarUrl, 25)'>
         <span class='c-name'>{{headInfo.nickname}}</span>
         <span class="c-time">{{$formatDate(headInfo.createTime)}}创建</span>
       </div>
@@ -19,7 +19,7 @@
         <div>
           歌曲数: {{headInfo.songCount}}
         </div>
-        <div>
+        <div v-if='headInfo.playCount'>
           播放数: {{headInfo.playCount}}
         </div>
       </div>
@@ -30,7 +30,7 @@
 <script>
 export default {
   name: 'sheetHeader',
-  props: ['headInfo'],
+  props: ['headInfo', 'type'],
   data () {
     return {
     };

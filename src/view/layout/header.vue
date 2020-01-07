@@ -171,6 +171,7 @@ import { menuRoutes } from '@/router'
        .r-item{
          font-size: 14px;
          margin-right: 20px;
+         cursor: pointer;
          &:nth-last-child(1) {
            margin-right: 0;
          }

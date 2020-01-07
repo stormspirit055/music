@@ -1,5 +1,6 @@
 <template>
   <div class='comment-wrap' v-if='id' ref='wrap' >
+    <div class="v-loading" v-if='isLoading' v-loading.lock="isLoading"></div>
     <div v-if='comments.length'>
       <div class='block' v-if='pageNum == 1 && hotComments.length'>
         <div class="w-title">精彩评论</div>
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-import { getSongSheetComment, getSongComment, getVideoComment, getMvComment } from '@/api'
+import { getSongSheetComment, getSongComment, getVideoComment, getMvComment,  getAlbumComment } from '@/api'
 import Pagination from '@/base/pagination'
 import Commentlist from '@/base/comment-list'
 export default {
@@ -38,16 +39,18 @@ export default {
       pageNum: 1,
       total: 0,
       comments: [],
-      hotComments: []
+      hotComments: [],
+      isLoading: false,
     };
   },
   mounted(){},
   methods: {
     async _getData() {
+      this.isLoading = true
       let result
       const params = {id: this.id, offset: (this.pageNum - 1) * 20}
       switch(this.type) {
-        case 'sheet':
+        case 'songsheet':
           result = await getSongSheetComment(params)
           break;
         case 'song': 
@@ -67,7 +70,8 @@ export default {
       this.total = total
       this.comments = this._generateComment(comments)
       if (this.pageNum == 1) this.hotComments = this._generateComment(hotComments)
-      console.log(this.hotComments)
+      this.isLoading = false
+      this.$refs.wrap.scrollIntoView({ behavior: "smooth" })
     },
     _generateComment(list) {
       return list.map(v => {
@@ -92,7 +96,6 @@ export default {
     _handlePageChange(e) {
       this.pageNum = e
       this._getData()
-      this.$refs.wrap.scrollIntoView({ behavior: "smooth" })
     }
   },
   components: { Pagination, Commentlist },
@@ -113,6 +116,15 @@ export default {
 .comment-wrap{
   position: relative;
   margin: 20px 30px 0;
+  .v-loading{
+    position: fixed;
+    margin: 0;
+    height: calc(100% - #{$mini-player-height});
+    width: calc(100vw -  #{$menu-side-width});
+    left: $menu-side-width;
+    z-index: 9999 !important;
+    bottom: $mini-player-height;
+  }
   .block{
     margin-bottom: 30px;
     .w-title{

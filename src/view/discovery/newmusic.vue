@@ -9,14 +9,15 @@
       <div class="m-left">
         <span @click='currentId = item.id' class="l-tab" :class='{active: currentId === item.id}' v-for='(item, index) in tabs' :key='index'>{{item.label}}</span>
       </div>
-      <!-- <div class="m-right" @click='_playAll'>播放全部</div> -->
     </div>
-    <Songlist ref='songlist' :isShowEmpty='false' :isShowHead='false' :isShowCover='true' :isFilter='false' :songList='songList' />
+    <Songlist ref='songlist' v-if='currentType == 0' :isShowEmpty='false' :isShowHead='false' :isShowCover='true' :isFilter='false' :songList='songList' />
+    <Albumlist v-if='currentType === 1' />
   </div>
 </template>
  
 <script>
 import { getTopsong } from '@/api'
+import Albumlist from './components/album-list'
 import Songlist from '@/components/songlist'
 export default {
   name: 'Discnewmusic',
@@ -81,7 +82,7 @@ export default {
       return songList
     },
   },
-  components: { Songlist },
+  components: { Songlist, Albumlist },
   computed: {},
   watch: {
     currentId: {

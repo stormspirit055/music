@@ -64,9 +64,12 @@ export default {
   }
   .w-list{
     display: flex;
-    justify-content: space-between;
     .l-item{
       width: calc(25% - 12px);
+      margin-right: 12px;
+      &:nth-child(4n) {
+        margin-right: 0;
+      }
       .i-innerwrap{
         position: relative;
         overflow: hidden;

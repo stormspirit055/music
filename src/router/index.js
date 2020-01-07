@@ -1,13 +1,15 @@
 import Router from 'vue-router'
 import Vue from 'vue'
 import Discoveryindex from '@/view/discovery'
+import Videoindex from '@/view/videos'
 import Discovery from '@/view/discovery/recommend'
 import Fm from '@/view/fm'
-import Videos from '@/view/videos'
+import Videolist from '@/view/videos/videolist'
+import Mvlist from '@/view/videos/mvlist'
 import SongSheet from '@/view/songsheet'
 import SearchPage from '@/view/searchpage'
 import Timeline from '@/view/timeline'
-import Mv from '@/view/mv'
+import Mvdetail from '@/view/mvdetail'
 import searchSongs from '@/view/searchpage/songs'
 import searchAlbums from '@/view/searchpage/albums'
 import searchMvs from '@/view/searchpage/mvs'
@@ -49,24 +51,24 @@ export const menuRoutes = [
         component: DiscSongsheet,
         meta: { title: '歌单' }
       },
-      {
-        path: 'radios',
-        name: 'discradios',
-        component: DiscRadios,
-        meta: { title: '主播电台' }
-      },
+      // {
+      //   path: 'radios',
+      //   name: 'discradios',
+      //   component: DiscRadios,
+      //   meta: { title: '主播电台' }
+      // },
       {
         path: 'rank',
         name: 'discrank',
         component: DiscRank,
         meta: { title: '排行榜' }
       },
-      {
-        path: 'singer',
-        name: 'discsinger',
-        component: DiscSinger,
-        meta: { title: '歌手' }
-      },
+      // {
+      //   path: 'singer',
+      //   name: 'discsinger',
+      //   component: DiscSinger,
+      //   meta: { title: '歌手' }
+      // },
       {
         path: 'newmusic',
         name: 'discnewmusic',
@@ -85,27 +87,49 @@ export const menuRoutes = [
     },
   },
   {
-    path: '/video',
-    name: 'video',
-    component: Videos,
+    path: '/videos',
+    name: 'videos',
+    component: Videoindex,
     meta: {
       title: '视频',
       icon: 'shipin',
     },
+    children: [
+      {
+        path: '/',
+        redirect: 'videolist'
+      },
+      {
+        path: 'videolist',
+        name: 'videolist',
+        component: Videolist,
+        meta: { title: '视频' }
+      },
+      {
+        path: 'mvlist',
+        name: 'mvlist',
+        component: Mvlist,
+        meta: { title: 'mv' }
+      },
+    ]
   },
-  {
-    path: '/friends',
-    name: 'friends',
-    component: Discovery,
-    meta: {
-      title: '朋友',
-      icon: 'pengyou',
-    },
-  },
+  // {
+  //   path: '/friends',
+  //   name: 'friends',
+  //   component: Discovery,
+  //   meta: {
+  //     title: '朋友',
+  //     icon: 'pengyou',
+  //   },
+  // },
 ]
 const router = new Router({
   routes: [
     ...menuRoutes,
+    {
+      path: '/',
+      redirect: 'discovery'
+    },
     {
       path: '/songsheet/:id',
       component: SongSheet,
@@ -113,10 +137,10 @@ const router = new Router({
       meta: {title: '歌单'}
     },
     {
-      path: '/mv',
-      component: Mv,
-      name: 'mv',
-      meta: {title: '视频'}
+      path: '/mvdetail',
+      component: Mvdetail,
+      name: 'mvdetail',
+      meta: {title: 'mv详情'}
     },
     {
       path: '/searchpage/:keywords',
@@ -177,12 +201,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.name === 'mv') {
-    // const func = {
-    //   ...mapMutations(['setSongState'])
-    // }
     console.log(store)
     store.commit('music/setSongState', false)
-    // console.log(mutations)
   }
   next()
   // ...

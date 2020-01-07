@@ -139,10 +139,10 @@ export default {
     .h-right{
       z-index: 1;
       .r-label{
-        color: $gold;
+        color: $yellow;
         height: 30px;
         box-sizing: border-box;
-        border: 1px solid $gold;
+        border: 1px solid $yellow;
         text-align: center;
         line-height: 30px;
         border-radius: 15px;
@@ -211,7 +211,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     .l-item{
-      width: 170px;
+      width: calc(20% - 20px);
       margin-right: 20px;
       margin-bottom: 30px;
       cursor: pointer;

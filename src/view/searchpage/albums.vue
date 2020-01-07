@@ -1,7 +1,7 @@
 <template>
   <div class='albums-wrap'>
     <div class="w-list">
-      <div class="l-item" v-for='(item ,index) in albums' :key='index'>
+      <router-link tag='div' :to="'/songsheet/' + item.id + '?type=album'" class="l-item" v-for='(item ,index) in albums' :key='index'>
         <div class="i-left">
           <img class='i-avatar' v-if='item.picUrl' v-lazy="$utils.generateImgurl(item.picUrl, 60)" alt="">
           <img class='i-avatar' v-if='!item.picUrl' src='/src/assets/default_avatar.jpg' alt="">
@@ -13,7 +13,7 @@
         <div class="i-artists">
           <Highlight :keywords='keywords' :text='item.artistText' />
         </div>
-      </div>
+      </router-link>
     </div>
     <Pagination v-if='total > pageSize' @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize' />
   </div>
@@ -71,6 +71,7 @@ export default {
 .albums-wrap{
   .w-list{
     .l-item{
+      cursor: pointer;
       display: flex;
       align-items: center;
       height: 80px;

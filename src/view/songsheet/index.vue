@@ -1,11 +1,15 @@
 <template>
   <div class='songsheet-wrap'>
-    <Header ref='header' :headInfo='headInfo' />
-    <div class="w-router">
+    <Header ref='header' :type='type' :headInfo='headInfo' v-if='id !== 0' />
+    <div class="w-recommendhead" v-if='id === 0'>
+      <p class="title">每日推荐歌曲</p>
+      <p class="desc">根据您的音乐口味生成, 每天6:00更新</p>
+    </div>
+    <div class="w-router"  v-if='id != 0'>
       <div class="r-left">
         <div class='l-item' @click='_swtichMode(0)' :class='{active: currentTab == 0}'>歌曲列表</div>
         <div class='l-item' @click='_swtichMode(1)' :class='{active: currentTab == 1}'>评论({{commentCount}})</div>
-        <div class='l-item' @click='_swtichMode(2)' :class='{active: currentTab == 2}'>收藏者</div>
+        <!-- <div class='l-item' @click='_swtichMode(2)' :class='{active: currentTab == 2}'>收藏者</div> -->
       </div>
       <div class="r-right" v-show='currentTab == 0'>
         <el-input
@@ -17,7 +21,7 @@
       </div>
     </div>
     <SongList :loading='loading' v-show='currentTab == 0' :keywords='keywords' :songList='songList' />
-    <Comment v-show='currentTab == 1' :id='commentId' type='sheet' />
+    <Comment v-show='currentTab == 1' :id='commentId' :type='type' />
   </div>
 </template>
 
@@ -25,7 +29,7 @@
 import Header from './header'
 import SongList from '@/components/songlist'
 import Comment from '@/components/comment'
-import { getSongSheetDetail } from '@/api'
+import { getAlbumDetail, getSongSheetDetail, getRecommendSongs } from '@/api'
 export default {
   data () {
     return {
@@ -75,6 +79,30 @@ export default {
       }
       this.commentCount = commentCount
     },
+    _generateAlbumHead(data) {
+      const {
+        picUrl: coverImgUrl,
+        publishTime: createTime,
+        name,
+        size: songCount,
+        info: {
+          commentCount,
+        },
+        id,
+        artist: {
+          name: nickname,
+        }
+      } = data
+      this.headInfo = {
+        id,
+        coverImgUrl,
+        createTime,
+        name,
+        nickname,
+        songCount
+      }
+      this.commentCount = commentCount
+    },
     _generateSonglist(tracks) {      
       let songList = tracks.map(v => {
         let artistsText = ''
@@ -96,7 +124,39 @@ export default {
       })
       this.songList = songList
     },
-    async _getDetail() {
+    _generateRecommedlist(tracks) {
+      let songList = tracks.map(v => {
+        let artistsText = ''
+        for(let value of v.artists) {
+          artistsText += value.name
+        }
+        return this.$utils.generateSong({
+          picUrl: v.album.picUrl,
+          mvid: v.mvid,
+          name: v.name,
+          albumName: v.album.name,
+          albumId: v.album.id,
+          id: v.id,
+          artists: v.artists,
+          duration: v.duration,
+          inSheet: !0,
+          artistsText
+        })
+      })
+      this.songList = songList
+    },
+    async getRecommend() {
+      this.loading = !0
+      const { recommend } = await getRecommendSongs()
+      this._generateRecommedlist(recommend)
+      this.loading = !1
+    },
+    async _getAlbumDetail() {
+      const { songs, album }  = await getAlbumDetail({ id: this.id})
+      this._generateAlbumHead(album)
+      this._generateSonglist(songs)
+    },
+    async _getSongsheetDetail() {
       this.loading =  !0
       let { playlist } = await getSongSheetDetail({ id: this.$route.params.id})
       this._generateHead(playlist)
@@ -108,14 +168,29 @@ export default {
   components: { Header, SongList, Comment },
   watch: {
     id: {
-      handler() {
-        this._getDetail()
+      handler(newV) {
+        if(newV === 0) {
+          this.getRecommend()
+        } else{
+          if (this.type === 'songsheet') {
+            this._getSongsheetDetail()
+          } else {
+            this._getAlbumDetail()
+          }
+        }
         this.keywords = ""
       },
       immediate: true,
     }
   },
   computed: {
+    type() {
+      if(this.$route.query.type) {
+        return this.$route.query.type
+      } else {
+        return 'songsheet'
+      }
+    },
     id() {
       return Number(this.$route.params.id)
     },
@@ -124,6 +199,20 @@ export default {
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
 .songsheet-wrap{
+  .w-recommendhead{
+    padding: 20px 0 0 30px;
+    margin-bottom: 20px;
+    .title{
+      font-size: $font-size-title-sm;
+      font-weight: 500;
+      color: $font-normal-color;
+      margin-bottom: 10px;
+    }
+    .desc{
+      color: $grey;
+      font-size:  $font-size-sm;
+    }
+  }
   .w-router{
     display: flex;
     margin: 50px 30px 0;

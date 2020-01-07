@@ -81,13 +81,17 @@ export default {
   .w-list{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    // justify-content: space-between;
     .l-item{
       width: calc(20% - 12px);
       margin-bottom: 30px;
+      margin-right: 12px;
       overflow: hidden;
       &:nth-child(n + 5) {
         margin-bottom: 0;
+      }
+      &:nth-child(5n) {
+        margin-right: 0;
       }
       .i-innerwrap{
         position: relative;

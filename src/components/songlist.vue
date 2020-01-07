@@ -156,7 +156,7 @@ export default {
       }
     },
     _goMv(id) {
-      this.$router.push(`/mv?type=mv&id=${id}`)
+      this.$router.push(`/mvdetail?type=mv&id=${id}`)
     }
   },
   components: {

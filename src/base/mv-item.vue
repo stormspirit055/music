@@ -44,9 +44,9 @@ export default {
   computed: {
     path() {
       if (this.item.mode === 'mv') {
-        return `/mv?type=mv&id=${this.item.id}`
+        return `/mvdetail?type=mv&id=${this.item.id}`
       } else {
-        return `/mv?type=video&id=${this.item.id}`
+        return `/mvdetail?type=video&id=${this.item.id}`
       }
     }
   },
@@ -72,11 +72,11 @@ export default {
       }
     }
     .c-play{
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        display: none;
-      }
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: none;
+    }
     .c-desc{
       transition: all .4s ;
       width: 100%;

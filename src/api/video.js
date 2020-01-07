@@ -19,3 +19,5 @@ export const getMvComment = params => request.get('/comment/mv', {params})
 export const getSimiMv = (params) => request.get('/simi/mv', { params})
 // 获取mv详情
 export const getMvDetail = (params) => request.get('/mv/detail', { params})
+// 获取全部mv
+export const getAllMv = (params) => request.get('/mv/all', { params})
