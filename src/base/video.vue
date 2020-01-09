@@ -4,7 +4,10 @@
 </template>
 
 <script>
-import xyPlayer from 'xgplayer'
+let xyPlayer 
+import(/* webpackPrefetch:true */'xgplayer').then((module) => {
+  xyPlayer = module.default;
+})
 export default {
   name:'Videocomponent',
   props: {
@@ -39,6 +42,7 @@ export default {
       handler(newV, oldV) {
         if (newV && newV !== oldV) {
           if (!this.player) {
+            console.log('哈哈哈哈哈')
             this.initVideo()
           } else {
             this.player.src = newV
