@@ -232,8 +232,8 @@ export default {
          background-color: #252525 !important;
        }
        .cell{
-        //  height: 26px;
-        //  line-height: 26px;
+         height: 26px;
+         line-height: 26px;
          min-width: 175px;
          @include limit-line(1);
          padding-left: 10px;
