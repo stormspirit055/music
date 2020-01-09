@@ -14,7 +14,7 @@
       >
         <template slot-scope='scope'>
           <span v-if='currentSong.id != scope.row.id'>{{scope.$index + 1 | addZero}}</span>
-          <Icon v-else type='laba1' class='c-play' />
+          <Icon v-else type='laba1' class='c-play' :size='12' />
         </template>
       </el-table-column>
       <el-table-column

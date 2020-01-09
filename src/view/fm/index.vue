@@ -11,7 +11,6 @@
 import pic1 from '@/assets/fm_skip1.png'
 import pic2 from '@/assets/fm_skip2.png'
 import pic3 from '@/assets/fm_skip3.png'
-import { getFm, getFmNext } from '@/api'
 export default {
   name: 'Fm',
   data () {
@@ -20,24 +19,7 @@ export default {
       pic2,
       pic3
     };
-  },
-
-
-
-
-
-
-
-  mounted(){
-  },
-  methods: {
-    async _initData() {
-      const result = await getFm()
-      console.log(result)
-    }
-  },
-  components: {},
-  computed: {},
+  }
 }
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>

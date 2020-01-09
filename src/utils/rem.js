@@ -24,8 +24,6 @@ export function toRem(px) {
   return `${px / remBase}rem`
 }
 
-// 根据当前的html根字体大小计算
-// 用于某些js的动态计算
 export function toCurrentRem(px) {
   return `${px / htmlFontSize}rem`
 }

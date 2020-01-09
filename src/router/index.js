@@ -29,7 +29,7 @@ export const menuRoutes = [
   {
     path: '/discovery',
     component: Discoveryindex,
-    name: 'discovery',
+    // name: 'discovery',
     meta: {
       title: '发现音乐',
       icon: 'yinle1',
@@ -77,18 +77,10 @@ export const menuRoutes = [
       },
     ]
   },
-  {
-    path: '/fm',
-    name: 'fm',
-    component: Fm,
-    meta: {
-      title: '私人fm',
-      icon: 'yinlediantai',
-    },
-  },
+ 
+  
   {
     path: '/videos',
-    name: 'videos',
     component: Videoindex,
     meta: {
       title: '视频',

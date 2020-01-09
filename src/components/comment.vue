@@ -11,7 +11,7 @@
         <Commentlist  :comments='comments'  />
       </div>
     </div>
-    <div class="w-empty" v-else>
+    <div class="w-empty" v-if='!isLoading && !comments.length'>
       还没有评论~
     </div>
     <Pagination @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize'></Pagination>
@@ -41,6 +41,7 @@ export default {
       comments: [],
       hotComments: [],
       isLoading: false,
+      isPageChange: false
     };
   },
   mounted(){},
@@ -71,7 +72,10 @@ export default {
       this.comments = this._generateComment(comments)
       if (this.pageNum == 1) this.hotComments = this._generateComment(hotComments)
       this.isLoading = false
-      this.$refs.wrap.scrollIntoView({ behavior: "smooth" })
+      if (this.isPageChange) {
+        this.$refs.wrap.scrollIntoView({ behavior: "smooth" })
+        this.isPageChange = false
+      }
     },
     _generateComment(list) {
       return list.map(v => {
@@ -96,6 +100,7 @@ export default {
     _handlePageChange(e) {
       this.pageNum = e
       this._getData()
+      this.isPageChange = true
     }
   },
   components: { Pagination, Commentlist },

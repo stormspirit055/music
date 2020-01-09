@@ -1,25 +1,27 @@
 <template>
   <div class='mv-wrap'>
-    <div class="w-left">
-      <Videocomponent :url='url' />
-      <div class="l-info" v-if='detail.name'>
-        <div class="i-creater">
-          <el-image fit='cover' :src="$utils.generateImgurl(detail.cover, 55)" alt="" class="c-img" />
-          <div class="c-artist">{{detail.artistText}}</div>
+    <template>
+      <div class="w-left">
+        <Videocomponent :url='url' />
+        <div class="l-info" v-if='detail.name'>
+          <div class="i-creater">
+            <el-image fit='cover' :src="$utils.generateImgurl(detail.cover, 55)" alt="" class="c-img" />
+            <div class="c-artist">{{detail.artistText}}</div>
+          </div>
+          <div class="i-title">{{detail.name}}</div>
+          <div class="i-detail">
+            <span>发布: {{detail.publishTime}}</span>
+            <span>播放: {{$utils.countFilter(detail.playCount)}}</span>
+          </div>
+          <div class="i-desc">{{detail.desc}}</div>
+          <div class="i-tags" v-if='type === "video"'></div>
         </div>
-        <div class="i-title">{{detail.name}}</div>
-        <div class="i-detail">
-          <span>发布: {{detail.publishTime}}</span>
-          <span>播放: {{$utils.countFilter(detail.playCount)}}</span>
-        </div>
-        <div class="i-desc">{{detail.desc}}</div>
-        <div class="i-tags" v-if='type === "video"'></div>
+        <Comment class='l-comment' :id='id' :type='type' />
       </div>
-      <Comment class='l-comment' :id='id' :type='type' />
-    </div>
-    <div class="w-right">
-      <Simiwrap :type='type' :id='id' />
-    </div>
+      <div class="w-right">
+        <Simiwrap :type='type' :id='id' />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -33,7 +35,7 @@ export default {
       url: '',
       detail: {
         artists: []
-      }
+      },
     };
   },
   methods: {
@@ -47,13 +49,11 @@ export default {
       }
     },
     async _getMvDetail() {
-      console.log('mv详情')
       const  { data }  = await getMvDetail({ mvid: this.id})
       data.artistText = data.artists.reduce((sum, v) => {
         return sum + v.name + ' / '
       }, '').slice(0, -2)
       this.detail = data
-      console.log(data)
     },
     async _getMvUrl() {
       const  { data } = await getMvUrl({ id: this.id})
@@ -108,6 +108,14 @@ export default {
   overflow: auto;
   display: flex;
   justify-content: center;
+  .v-loading{
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    z-index: 9999 !important;
+  }
   .w-left{
     width: 630px;
     margin-right: 20px;
@@ -149,6 +157,9 @@ export default {
     .l-comment{
       margin-left: 0px;
     }
+  }
+  .w-right{
+    width: 270px;
   }
 }
 </style>

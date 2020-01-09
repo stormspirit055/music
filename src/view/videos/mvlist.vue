@@ -128,9 +128,10 @@ padding-top: 20px;
 align-items: center;
 height: 100%;
 overflow-y: auto;
+padding-left: 15px;
   .l-filter{
     width: 1000px; 
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     .f-line{
       display: flex;
       align-items: center;
@@ -162,6 +163,7 @@ overflow-y: auto;
     width: 1040px;
     display: flex;
     flex-wrap: wrap;
+    margin: 0 auto;
   }
 }
 </style>

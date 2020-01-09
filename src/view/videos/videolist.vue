@@ -8,7 +8,7 @@
       <div class="t-right">
         <span class="r-item" @click='_switchType(item)' :class='{active: currentTag.id === item.id}' v-for='(item, index) in defaultTags' :key='index'>{{item.name}}</span>
       </div>
-    </div>
+    </div>       
     <div class="w-list">
       <Mvitem v-for='(item, index) in mvs' :key="index" :item='item' />
     </div>
@@ -31,19 +31,22 @@ export default {
   },
   mounted(){
     this._getVideoTagList()
-    let wrap = this.$refs.wrap
-    const scrollHeight = wrap.scrollHeight
-    const wrapHeight = wrap.getBoundingClientRect().height
-    wrap.addEventListener('scroll', throttle(() => {
-      if (this._isTouchBottom(scrollHeight, wrap.scrollTop)) this._getTagVideos()
-    }, 500))
+    this._initScroll()
   },
   methods: {
+    _initScroll() {
+      let wrap = this.$refs.wrap
+      const scrollHeight = wrap.scrollHeight
+      const wrapHeight = wrap.getBoundingClientRect().height
+      wrap.addEventListener('scroll', throttle(() => {
+        if (this._isTouchBottom(scrollHeight, wrap.scrollTop)) this._getTagVideos()
+      }, 500))
+    },
     _isTouchBottom(scrollHeight, scrollTop) {
       const mvLines = Math.ceil(this.mvs.length / 4)
-      const mvH = 201
+      const mvH = 201    //每个mv的高度
       const mvTotalH = mvH * mvLines
-      const otherH = 104
+      const otherH = 104   //其他部分的高度
       const currentHeight = this.$utils.toCurrentPx(otherH + mvTotalH)
       if (scrollHeight + scrollTop + 20 >= currentHeight) {
         console.log('去拿数据吧')
@@ -143,7 +146,6 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-left: 15px;
-  // min-width: 1040px;;
   .w-title{
     display: flex;
     justify-content: space-between;

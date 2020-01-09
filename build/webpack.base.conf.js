@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require('webpack')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -13,13 +14,20 @@ module.exports = {
     path: resolve('dist'),
     filename: '[name]_[hash].bundle.js'
   },
+
   plugins: [
+    // new CaseSensitivePathsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: resolve('src/index.html')
     }),
     new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
+    //过滤moment其他语言包 打包体积缩小200kb
+    new webpack.ContextReplacementPlugin(
+      /moment[/\\]locale$/,
+      /zh-cn/,
+    ),
   ],
   resolve: {
     extensions: ['.js', '.vue', '.scss', '.jsx', '.css'],
@@ -34,6 +42,11 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
+        xgplayer: {
+          test: /xgplayer/,
+          priority: 0,
+          name: 'xgplayer'
+        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
@@ -51,12 +64,6 @@ module.exports = {
         exclude: /node_modules\/(?!(autotrack|dom-utils))|vendor\.dll\.js/ // 添加配置
       },
       {
-        test: /\.css$/i,
-        //style-loader 将生成的css 内容挂载到页面的head部分
-        //css-loader 分析出css 文件的关系, 并合并成一段css
-        use: ['style-loader', 'css-loader']
-      },
-      {
         // 正则匹配所有以.png,jpg,gif结尾的文件
         test: /\.(png|jpg|gif|jpeg|eot|woff|ttf)$/,
         // 使用url-loader对图片进行处理
@@ -70,24 +77,6 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-          {
-            loader: "sass-resources-loader",
-            options: {
-              resources: [ 
-                resolve("src/style/variables.scss"),
-                resolve( "src/style/mixin.scss")
-              ]
-            }
-          }
-        ],
       },
       {
         test: /\.js$/,
