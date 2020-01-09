@@ -36,10 +36,13 @@ import { mapState } from '@/store/helper/music'
 import BScroll from '@better-scroll/core'
 import MouseWheel from "@better-scroll/mouse-wheel"
 import ScrollBar from "@better-scroll/scroll-bar"
+// let xyPlayer 
+// import(/* webpackPrefetch:true */'xgplayer').then((module) => {
+//   xyPlayer = module.default;
+// })
 BScroll.use(ScrollBar)
 BScroll.use(MouseWheel)
 const QUICK_SECOND = 2000
-import LyricParser from 'lyric-parser'
 export default {
   name: 'Lyric',
   props: {
@@ -82,7 +85,7 @@ export default {
           if (!time) continue
           text = v.split(time[0])[1]
           let minute = time[0].match(/\[\d+/i)[0].slice(1)
-          let second = time[0].match(/\:\d+(\.)\d+/g)[0].slice(1)
+          let second = time[0].match(/\:\d+(\.?)\d+/g)[0].slice(1)
           list.push({
             time: +minute * 60 * 1000 + +second * 1000,
             text
