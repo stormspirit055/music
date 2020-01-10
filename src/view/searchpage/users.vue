@@ -12,6 +12,7 @@
         <div class="i-identify" v-if='item.signature'>{{item.signature}}</div>
       </div>
     </div>
+    <div class="w-empty" v-if='!total && getResult' >没有找到与 <span>'{{keywords}}'</span> 的相关用户</div>
     <Pagination v-if='total > pageSize' @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize' />
   </div>
 </template>
@@ -28,6 +29,7 @@ export default {
       pageSize: 30,
       pageNum: 1,
       total: 0,
+      getResult: !1
     };
   },
   methods: {
@@ -39,6 +41,7 @@ export default {
       this.$parent.total = userprofileCount
       this.userprofiles = userprofiles
       this.$emit('update', true)
+      this.getResult = !0
     },
     _handlePageChange(e) {
       this.pageNum = e
@@ -112,6 +115,15 @@ export default {
         font-size: $font-size-sm;
         color: $grey;
       }
+    }
+  }
+  .w-empty{
+    position: relative;
+    text-align: center;
+    color: #fff;
+    margin-top: 50px;
+    span{
+      color: $blue;
     }
   }
 }

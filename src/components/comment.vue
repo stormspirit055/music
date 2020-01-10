@@ -1,13 +1,13 @@
 <template>
   <div class='comment-wrap' v-if='id' ref='wrap' >
-    <div class="v-loading" v-if='isLoading' v-loading.lock="isLoading"></div>
+    <div class="v-loading" v-if='isLoading && isNeedLoading' v-loading.lock="isLoading"></div>
     <div v-if='comments.length'>
-      <div class='block' v-if='pageNum == 1 && hotComments.length'>
+      <div class='block' v-if='pageNum == 1 && hotComments.length' >
         <div class="w-title">精彩评论</div>
         <Commentlist  :comments='hotComments'  />
       </div>
       <div class='block'>
-        <div class='w-title'>最新评论 ({{total}})</div>
+        <div class='w-title new' ref='wrap'>最新评论 ({{total}})</div>
         <Commentlist  :comments='comments'  />
       </div>
     </div>
@@ -31,6 +31,10 @@ export default {
     type: {
       type: String,
       default: 'song'
+    },
+    isNeedLoading: {
+      type: Boolean,
+      default: !0
     }
   },
   data () {
@@ -131,10 +135,13 @@ export default {
     bottom: $mini-player-height;
   }
   .block{
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
     .w-title{
       font-size: $font-size;
       color: $font-normal-color;
+      &.new{
+        padding-top: $layout-header-height;
+      }
     }
   }
   .w-empty{

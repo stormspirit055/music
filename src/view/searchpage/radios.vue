@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <div class="w-empty" v-if='!total && !loading' >没有找到与 <span>'{{keywords}}'</span> 的相关电台</div>
+    <div class="w-empty" v-if='!total && getResult' >没有找到与 <span>'{{keywords}}'</span> 的相关电台</div>
     <Pagination v-if='total > pageSize' @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize' />
   </div>
 </template>
@@ -31,6 +31,7 @@ export default {
       pageSize: 30,
       pageNum: 1,
       total: 0,
+      getResult: !1
     };
   },
   methods: {
@@ -47,6 +48,7 @@ export default {
       // })
       this.djRadios = djRadios
       this.$emit('update', true)
+      this.getResult = !0
     },
     _handlePageChange(e) {
       this.pageNum = e

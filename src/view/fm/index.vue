@@ -1,6 +1,6 @@
 <template>
   <div class='fm-wrap'>
-    <p>我抓包到了接口, 但不知道他需要什么参数, 有没有兄弟可以教教我11111</p>
+    <p>我抓包到了接口, 但不知道他需要什么参数, 有没有兄弟可以教教我</p>
     <el-image  class='img' :src="pic1" alt="" />
     <el-image class='img' :src="pic2" alt="" />
     <el-image class='img' :src="pic3" alt=""/>

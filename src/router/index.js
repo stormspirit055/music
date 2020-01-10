@@ -114,6 +114,15 @@ export const menuRoutes = [
   //     icon: 'pengyou',
   //   },
   // },
+  // {
+  //   path: '/fm',
+  //   name: 'fm',
+  //   component: Fm,
+  //   meta: {
+  //     title: '私人fm',
+  //     icon: 'yinlediantai',
+  //   },
+  // },
 ]
 const router = new Router({
   routes: [

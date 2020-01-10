@@ -12,7 +12,7 @@
     </div>
     <div class="w-comment">
       <div class="c-comment-wrap">
-        <Comment :id='currentSong.id'  />
+        <Comment :isNeedLoading='false' :id='currentSong.id'  />
       </div>
       <div class="c-relate">
         <Simiwrap type='song' :id='currentSong.id' />

@@ -3,6 +3,7 @@
     <div class="w-list">
       <Mvitem :item='item' :keywords='keywords'   v-for='(item, index) in videos' :key='index' />
     </div>
+    <div class="w-empty" v-if='!total && getResult' >没有找到与 <span>'{{keywords}}'</span> 的相关mv</div>
     <Pagination v-if='total > pageSize' @pagechange='_handlePageChange' :total='total'  :pageSize='pageSize' />
   </div>
 </template>
@@ -19,6 +20,7 @@ export default {
       pageSize: 28,
       pageNum: 1,
       total: 0,
+      getResult: false
     };
   },
   methods: {
@@ -35,7 +37,7 @@ export default {
         v.artistName = v.creator[0].userName
       })
       this.videos = videos
-      // this.songList = this._generateSonglist(songs)
+      this.getResult = !0
       this.$emit('update', true)
     },
     _handlePageChange(e) {

@@ -13,8 +13,10 @@
         :width='$utils.toCurrentPx(50)'
       >
         <template slot-scope='scope'>
-          <span v-if='currentSong.id != scope.row.id'>{{scope.$index + 1 | addZero}}</span>
-          <Icon v-else type='laba1' class='c-play' :size='12' />
+          <div class='c-index'>
+            <span v-if='currentSong.id != scope.row.id'>{{scope.$index + 1 | addZero}}</span>
+            <Icon v-else type='laba1' class='c-play' :size='12' />
+          </div>
         </template>
       </el-table-column>
       <el-table-column
@@ -70,7 +72,7 @@
       </el-table-column>
     </el-table>
     <div class="w-emtpy" v-if='filterSongList.length == 0 && loading == false && isShowEmpty'>
-      未能找到与'<span style='color: '>{{keywords}}</span>'相关的歌曲
+      未能找到与'<span>{{keywords}}</span>'相关的歌曲
     </div>
   </div>
 </template>
@@ -232,8 +234,6 @@ export default {
          background-color: #252525 !important;
        }
        .cell{
-         height: 26px;
-         line-height: 26px;
          min-width: 175px;
          @include limit-line(1);
          padding-left: 10px;
@@ -250,6 +250,10 @@ export default {
        }
        .c-limit{
          @include limit-line(1);
+       }
+       .c-index{
+         height: 26px;
+         line-height: 26px;
        }
        .c-cover{
          position: relative;
@@ -285,8 +289,9 @@ export default {
     margin-top: 50px;
     color: $grey;
     span{
-      color: $red;
+      color: $blue;
     }
   }
+  
 }
 </style>

@@ -16,10 +16,12 @@
       </div>
      </div>
      <div class="w-right" :class='{showPanel:showPlayPanel}'>
-       <div class="r-router">
+       <div class="r-router" >
+         <template v-if='!showPlayPanel'>
           <router-link tag='div' :to='item.path' class="r-item default" active-class='active' v-for='(item, index) in children' :key='index'>
             {{item.meta.title}}
           </router-link>
+         </template>
        </div>
        <div class="r-search">
         <el-input
@@ -83,6 +85,7 @@ import { menuRoutes } from '@/router'
     async _handleEnter() {
       if (!this.keywords.trim() || this.keywords == this.$route.params.keywords) return 
       this.setSearchPanelState(!1)
+      this.setPlayPanelState(false)
       this.$router.push(`/searchpage/${this.keywords}`) 
     },
     _handleBack() {

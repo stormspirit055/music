@@ -83,9 +83,10 @@ export default {
     this._getHotSearch()
   },
   methods: {
-    ...mapMutations(['setSearchPanelState']),
+    ...mapMutations(['setSearchPanelState', 'setPlayPanelState']),
     ...mapActions(['startSong']),
     _handleSearch(innerkeywords) {
+      this.setPlayPanelState(false)
       this.$emit('updatekeywords', innerkeywords)
       this.innerkeywords = innerkeywords
       this._handleGoSearch('songs')

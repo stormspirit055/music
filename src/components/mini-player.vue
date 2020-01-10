@@ -20,14 +20,14 @@
         </template>
       </div>
       <div class="p-middle">
-        <Icon class='m-like' type='main_girl' />
+        <!-- <Icon class='m-like' type='main_girl' /> -->
         <Icon class='m-prev' @click='_handleSwitchSong("prev")' type='shangyishou' :size='24' />
         <div class="m-play" @click='_switchState'>
           <Icon type='bofang' canBubble v-if='!isPlaying' />
           <Icon type='zantingtingzhi' canBubble v-else />
         </div>
         <Icon class='m-prev rotate' @click='_handleSwitchSong("next")' type='shangyishou' :size='24' />
-        <Icon type='fenxiang' class='m-share'  :size='16' />
+        <!-- <Icon type='fenxiang' class='m-share'  :size='16' /> -->
       </div>
       <div class="p-right">
         <div class="r-order"

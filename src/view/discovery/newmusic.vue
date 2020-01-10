@@ -1,10 +1,10 @@
 <template>
   <div class='newmusic-wrap'>
     <div class="v-loading" v-if='isLoading' v-loading.lock="isLoading"></div>
-    <div class="w-title">
+    <!-- <div class="w-title">
       <div class="t-item" @click='currentType = 0' :class='{active: currentType == 0}'>新歌速递</div>
       <div class="t-item" @click='currentType = 1' :class='{active: currentType == 1}'>新碟上架</div>
-    </div>
+    </div> -->
     <div class="w-middle">
       <div class="m-left">
         <span @click='currentId = item.id' class="l-tab" :class='{active: currentId === item.id}' v-for='(item, index) in tabs' :key='index'>{{item.label}}</span>

@@ -1,5 +1,6 @@
 <template>
   <div class='songsheet-wrap'>
+    <div class="v-loading" v-if='loading' v-loading.lock="loading"></div>
     <Header ref='header' :type='type' :headInfo='headInfo' v-if='id !== 0' />
     <div class="w-recommendhead" v-if='id === 0'>
       <p class="title">每日推荐歌曲</p>
@@ -199,6 +200,15 @@ export default {
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
 .songsheet-wrap{
+  .v-loading{
+    position: fixed;
+    margin: 0;
+    height: calc(100vh -  #{$layout-header-height});
+    top: $layout-header-height;
+    width: calc(100vw -  #{$menu-side-width});
+    left: $menu-side-width;
+    z-index: 9999 !important;
+  }
   .w-recommendhead{
     padding: 20px 0 0 30px;
     margin-bottom: 20px;

@@ -1,7 +1,7 @@
 <template>
   <div class='new-music-wrap' v-if='songList.length'>
     <div class="w-title">
-      最新音乐111
+      最新音乐
       <Icon type='iconfontyoujiantou-copy-copy-copy-copy-copy' :size='14' />
     </div>
     <div class="w-list">
