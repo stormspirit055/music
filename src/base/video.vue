@@ -43,7 +43,10 @@ export default {
         if (newV && newV !== oldV) {
           if (!this.player) {
             console.log('哈哈哈哈哈')
-            this.initVideo()
+            import(/* webpackPrefetch:true */'xgplayer').then((module) => {
+              xyPlayer = module.default;
+              this.initVideo()
+            })
           } else {
             this.player.src = newV
             this.player.reload()

@@ -16,7 +16,7 @@
           <div class="i-desc">{{detail.desc}}</div>
           <div class="i-tags" v-if='type === "video"'></div>
         </div>
-        <Comment class='l-comment' :id='id' :type='type' />
+        <Comment :isNeedLoading='false' class='l-comment' :id='id' :type='type' />
       </div>
       <div class="w-right">
         <Simiwrap :type='type' :id='id' />

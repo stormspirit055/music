@@ -1,6 +1,6 @@
 <template>
   <div class="user-wrap">
-    <div class='w-box' @click='dialogLogininVisible = true' v-if='!isLogin'>
+    <div class='w-box' @click='_handleTriggerLogin' v-if='!isLogin'>
       <Icon type='morentouxiang' :size='40' />
       <div class="b-name">点击登录</div>
       <Icon type='right' :size='10' />
@@ -29,12 +29,12 @@
     </div>
     <el-dialog
       title="登录"
-      :visible.sync="dialogLogininVisible"
+      :visible.sync="isShowLogin"
       :width="$utils.toRem(300)"
       :before-close="handleClose">
-      <el-input class='el-input-login'  placeholder="账号" v-model="phone">
+      <el-input class='el-input-login'  placeholder="请输入账号" v-model="phone">
       </el-input>
-      <el-input class='el-input-login' type='password' placeholder="密码" v-model="password">
+      <el-input class='el-input-login' type='password'  placeholder="请输入密码" v-model="password">
       </el-input>
       <el-button class='login-btn' @click="_doLogin" :loading="loading">登 录</el-button>
     </el-dialog>
@@ -42,14 +42,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from '@/store/helper/user'
+import { mapActions, mapGetters, mapMutations, mapState } from '@/store/helper/user'
 import { login, getUserDetail } from '@/api'
 import { confirm } from '@/base/confirm'
 import storage from 'good-storage'
 export default {
   data () {
     return {
-      dialogLogininVisible: false,
       password: '',
       phone: '',
       isVaild: !1,
@@ -63,6 +62,7 @@ export default {
       'getUser', ,
       'isLogin'
     ]),
+    ...mapState(['isShowLogin'])
   },
   created() {
     const uid = storage.get('U_ID')
@@ -73,10 +73,14 @@ export default {
   methods: {
     ...mapActions([
       'getUserDetail',
-      'logout'
+      'logout',
     ]),
+    ...mapMutations(['setLoginState']),
+    _handleTriggerLogin() {
+      this.setLoginState(true)
+    },
     handleClose() {
-      this.dialogLogininVisible = false;
+      this.setLoginState(false)
     },
     _doLogin() {
       this.loading = !0
@@ -86,14 +90,17 @@ export default {
       }).finally(() => { 
         this.loading = !1
       })
+      // storage.set('U_ID', this.account)
+      // this.getUserDetail(this.account) && this.handleClose()
     },
     _handleLogout() {
       confirm('确定注销账号?', () => {
         this.logout()
         this.infoVisible = !1
+        this.$router.push('/')
       })
     }
-  }
+  },
 }
 
 </script>
@@ -102,6 +109,15 @@ export default {
   position: relative;
   padding-left: 10px;
   cursor: pointer;
+  ul{
+    li{
+      margin-bottom: 5px;
+    }
+  }
+  .login-btn{
+    margin-top: 10px;
+    width: 100%;
+  }
   .w-box{
     display: flex;
     align-items: center;
@@ -117,57 +133,57 @@ export default {
       font-weight: 500;
     }
     .w-detail{
-    position: fixed;
-    left: 170px;
-    top: calc(#{$layout-header-height} + 10px);
-    background: #2f2f2f;
-    border-radius: 6px;
-    width: 320px;
-    height: 150px;
-    padding: 25px 0 15px 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    z-index: $userdetail-index;
-    .d-line{
+      position: fixed;
+      left: 170px;
+      top: calc(#{$layout-header-height} + 10px);
+      background: #2f2f2f;
+      border-radius: 6px;
+      width: 320px;
+      height: 150px;
+      padding: 25px 0 15px 0;
+      box-sizing: border-box;
       display: flex;
-      position: relative;
-      justify-content: center;
-      .l-item{
-        width: 90px;
-        height: 55px;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      z-index: $userdetail-index;
+      .d-line{
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        &:nth-child(2){
-          border-left: 1px solid #444;
-          border-right: 1px solid #444;
-        }
-        .i-num{
-          color: #b6b6b6;
-          font-weight: 700;
-          @include text-vertical-center(26px);
-        }
-        .i-text{
-          color: $grey;
-          font-size:  $font-size;
+        position: relative;
+        justify-content: center;
+        .l-item{
+          width: 90px;
+          height: 55px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          &:nth-child(2){
+            border-left: 1px solid #444;
+            border-right: 1px solid #444;
+          }
+          .i-num{
+            color: #b6b6b6;
+            font-weight: 700;
+            @include text-vertical-center(26px);
+          }
+          .i-text{
+            color: $grey;
+            font-size:  $font-size;
+          }
         }
       }
+      .d-logout{
+        width: 150px;
+        border: 1px solid $grey;
+        font-size: $font-size;
+        color: $font-normal-color;
+        border-radius: 4px;
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+      }
     }
-    .d-logout{
-      width: 150px;
-      border: 1px solid $grey;
-      font-size: $font-size;
-      color: $font-normal-color;
-      border-radius: 4px;
-      text-align: center;
-      line-height: 30px;
-      height: 30px;
-    }
-  }
   }
   
 }

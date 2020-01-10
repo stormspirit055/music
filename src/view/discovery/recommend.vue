@@ -2,7 +2,7 @@
 <template>
   <div class='discovery-wrap'>
     <Banner />
-    <RecommendSongsheet />
+    <RecommendSongsheet v-if='user' />
     <NewMusic />
     <RecommendMv />
     <RecommendRadio />
@@ -15,12 +15,16 @@ import RecommendSongsheet from './components/recommend-songsheet'
 import NewMusic from './components/new-music'
 import RecommendMv from './components/recommend-mv'
 import RecommendRadio from './components/recommend-radio'
+import { mapState } from '@/store/helper/user'
 export default { 
   components: { Banner, RecommendSongsheet, NewMusic, RecommendMv, RecommendRadio },
   data() {
     return {
 
     }
+  },
+  computed:{
+    ...mapState(['user'])
   }
 }
 

@@ -4,5 +4,8 @@ export default {
   },
   setUserPlaylist(state, userPlaylist) {
     state.userPlaylist = userPlaylist
+  },
+  setLoginState(state, isShowLogin) {
+    state.isShowLogin = isShowLogin
   }
 }

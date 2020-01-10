@@ -3,7 +3,7 @@
     <div class="v-loading" v-if='isLoading && isNeedLoading' v-loading.lock="isLoading"></div>
     <div v-if='comments.length'>
       <div class='block' v-if='pageNum == 1 && hotComments.length' >
-        <div class="w-title">精彩评论</div>
+        <div class="w-title">精彩评论{{isNeedLoading}}</div>
         <Commentlist  :comments='hotComments'  />
       </div>
       <div class='block'>

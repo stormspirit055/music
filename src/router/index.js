@@ -1,3 +1,4 @@
+import storage from 'good-storage'
 import Router from 'vue-router'
 import Vue from 'vue'
 import Discoveryindex from '@/view/discovery'
@@ -201,6 +202,12 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.name !== 'discrecommend') {
+    if(!storage.get('U_ID')) {
+      store.commit('user/setLoginState', true)
+      return
+    }
+  }
   if (to.name === 'mv') {
     console.log(store)
     store.commit('music/setSongState', false)

@@ -24,11 +24,13 @@ function createBaseInstance() {
     }
   }, error => {
     console.log(error.response)
-    Notification({
-      title: '提示',
-      message: error.response.data.msg ||  error.response.data.message,
-      type: 'error'
-    })
+    if (error.response.status !== 301) {
+      Notification({
+        title: '提示',
+        message: error.response.data.msg ||  error.response.data.message,
+        type: 'error'
+      })
+    }
   })
   return instance
 }

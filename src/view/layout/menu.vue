@@ -1,7 +1,6 @@
 <template>
   <div class='menu-wrap'>
     <User />
-    <!-- <div @click='log'>按钮</div> -->
     <div class="w-block" v-for='(menu, index) in menuListWithRoot' :key='index'>
       <p class="b-title" v-if='menu.title'>{{menu.title}}</p>
       <ul class='b-list'>

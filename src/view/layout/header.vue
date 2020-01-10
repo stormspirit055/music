@@ -86,6 +86,7 @@ import { menuRoutes } from '@/router'
       if (!this.keywords.trim() || this.keywords == this.$route.params.keywords) return 
       this.setSearchPanelState(!1)
       this.setPlayPanelState(false)
+      this.updateSearchHistory(this.keywords.trim())
       this.$router.push(`/searchpage/${this.keywords}`) 
     },
     _handleBack() {

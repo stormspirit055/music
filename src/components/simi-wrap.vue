@@ -1,5 +1,5 @@
 <template>
-  <div class='simi-wrap'>
+  <div class='simi-wrap' v-if='listData.length'>
     <div class="w-title">{{titleMap[type]}}</div>
     <div class="w-list">
       <component  v-for='(item, index) in listData' :key='index' :is="comName" :type='type' :info='item'></component>
@@ -57,7 +57,9 @@ export default {
       }
     },
     async _getSimiUser() {
-      let { userprofiles } = await getSimiUser({ id: this.id })
+      let data = await getSimiUser({ id: this.id })
+      if(!data) return
+      const { userprofiles }  = data
       this.listData = userprofiles.map(v => {
         const { gender, nickname, userId, recommendReason, avatarUrl } = v
         return {

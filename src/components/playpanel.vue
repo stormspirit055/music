@@ -34,7 +34,7 @@ export default {
   name: 'Playpanel',
   data () {
     return {
-      playBar
+      playBar,
     };
   },
 
