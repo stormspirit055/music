@@ -53,7 +53,10 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
     minimizer: [new OptimizeCSSAssetsPlugin({})]
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      chunkFilename: '[name]_[hash:8].css',
+      filename: '[name]_[hash:8].css'
+    }),
     // gzip 服务端也能进行压缩, 但是如果客户端直接把压缩好的gzip文件传到服务端 可以节省服务端在收到请求后对文件进行的压缩的性能损耗
     new CompressionWebpackPlugin({
       algorithm: 'gzip',
@@ -70,8 +73,8 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
         },
         warnings: false,
         compress: {
-          drop_debugger: false, // 去除生产环境的 debugger 和 console.log
-          drop_console: false
+          drop_debugger: true, // 去除生产环境的 debugger 和 console.log
+          drop_console: true
         }
       }
     }),

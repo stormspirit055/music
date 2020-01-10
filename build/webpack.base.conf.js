@@ -12,7 +12,9 @@ module.exports = {
   entry: resolve('src/main.js'),
   output: {
     path: resolve('dist'),
-    filename: '[name]_[hash].bundle.js'
+    //将打包后分割的js文件统一输出到dist/js 目录下
+    filename: '[name]_[hash].bundle.js',
+    chunkFilename: '[name].js'
   },
 
   plugins: [
@@ -30,7 +32,7 @@ module.exports = {
     ),
   ],
   resolve: {
-    extensions: ['.js', '.vue', '.scss', '.jsx', '.css'],
+    extensions: ['.js', '.vue', '.scss', '.css'],
     alias: { 
       'vue': 'vue/dist/vue.js',
       '@': resolve('src'),
@@ -73,7 +75,7 @@ module.exports = {
             options: {
               limit: 8192,
               //将图片资源打包到一个文件中, 并重新命名
-              name: 'images/[name]_[hash].[ext]'
+              name: '[name]_[hash].[ext]'
             }
           }
         ]
