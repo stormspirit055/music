@@ -41,6 +41,7 @@
         <div class="r-volume-trigger">
           <Volume :volume='volume' @changeVolume='_handleChangeVolume' />
         </div>
+        <Icon class='github' type='github' :size='18' @click='_goGithub' />
       </div>
     </div>
     <audio 
@@ -117,6 +118,9 @@ export default {
     },
     _switchState() {
       this.setSongState(!this.isPlaying)
+    },
+    _goGithub() {
+      window.open("https://github.com/stormspirit055/music","_blank");      
     },
     _handleEnded() {
       const playList = this.playList.list
@@ -330,6 +334,11 @@ export default {
         &.active{
           color: $red;
         }
+      }
+      .github{
+        margin-left: 10px;
+        cursor: pointer;
+        color: #fff !important;
       }
     }
   }

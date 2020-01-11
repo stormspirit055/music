@@ -22,6 +22,10 @@ export default {
     }
   },
   methods: {
+    destory(){
+      this.player.destroy()
+      console.log('摧毁')
+    },
     initVideo() {
       this.player = new xyPlayer({
           id: 'video-player',
@@ -42,7 +46,6 @@ export default {
       handler(newV, oldV) {
         if (newV && newV !== oldV) {
           if (!this.player) {
-            console.log('哈哈哈哈哈')
             import(/* webpackPrefetch:true */'xgplayer').then((module) => {
               xyPlayer = module.default;
               this.initVideo()

@@ -2,7 +2,7 @@
   <div class='mv-wrap'>
     <template>
       <div class="w-left">
-        <Videocomponent :url='url' />
+        <Videocomponent ref='video' :url='url' />
         <div class="l-info" v-if='detail.name'>
           <div class="i-creater">
             <el-image fit='cover' :src="$utils.generateImgurl(detail.cover, 55)" alt="" class="c-img" />
@@ -77,6 +77,9 @@ export default {
     }
   },
   components: { Comment, Simiwrap },
+  beforeDestroy() {
+    this.$refs.video.destory()
+  },
   computed: {
     type() {
       return this.$route.query.type

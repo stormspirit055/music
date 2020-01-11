@@ -208,7 +208,7 @@ router.beforeEach((to, from, next) => {
       return
     }
   }
-  if (to.name === 'mv') {
+  if (to.name === 'mvdetail') {
     console.log(store)
     store.commit('music/setSongState', false)
   }
