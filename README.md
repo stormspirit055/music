@@ -7,7 +7,7 @@
 * 感谢[大佬提供的api](https://github.com/Binaryify/NeteaseCloudMusicApi)
 #### 项目简介
 ---
-
+[预览地址](http://47.98.146.129:3390/music/)
 ##### 技术栈
 
 * webpack4(打包工具, 这个项目中我并没有用vue-cli, 因为想体验下自己搭建webpack有多痛苦:( )
@@ -37,14 +37,14 @@
 
 ##### 项目预览
 
-![a903174849f854dfc2022fc972c660b2.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p12)
-![067bf588c7c3423a09104acbbfcfee25.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p13)
-![d520c930f37f190c2fa2ca74c7c790e4.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p14)
-![69d2b6eedd015e2c06a74584065f334e.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p15)
-![b4fb287ad8f9804c24b8f4d34a800855.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p16)
-![294fea933317bc3c57bbbd02ae17445f.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p17)
-![046d64b36a7e064723a67fedd21a078b.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p18)
-![dd8352581af79471bb859f9cdec3df71.png](evernotecid://A530686E-746A-4FB9-831A-09267A2417C8/appyinxiangcom/27139280/ENResource/p19)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f936fa63cc76b7?w=3358&h=1834&f=png&s=192820)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f936ff15411314?w=3354&h=1830&f=png&s=737271)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f936ffb329c0d8?w=3352&h=1834&f=png&s=604815)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f9370054257f69?w=3354&h=1840&f=png&s=154070)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f93700c3a49a95?w=3350&h=1830&f=png&s=160910)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f93702d66aff2f?w=3354&h=1832&f=png&s=296084)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f93703689a1de5?w=3354&h=1828&f=png&s=377430)
+![](https://user-gold-cdn.xitu.io/2020/1/11/16f93703ff335a2c?w=3360&h=1838&f=png&s=210892)
 
 ##### 跑一下
 
