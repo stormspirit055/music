@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.conf.js --optimize-minimize",
     "start": "cross-env NODE_ENV=development webpack-dev-server  --config build/webpack.dev.conf.js",
-    "analyz": "NODE_ENV=production npm_config_report=true npm run build",
+    "analyz": "NODE_ENV=production npm_config_report=true webpack  --config build/analyzer.js --optimize-minimize",
     "release": "npm run build && node build/release.js"
   },
   "author": "stormspirit",
