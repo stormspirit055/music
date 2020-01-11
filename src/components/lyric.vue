@@ -5,9 +5,9 @@
       <span class='t-tag'>标准音质</span>
     </div>
     <div class="w-desc">
-      <p class='d-album'>
-        <span class="i-label">专辑: </span>
-        <span class="i-content">{{currentSong.albumName}}</span>
+      <p class='d-album' v-if='currentSong.albumName'>
+        <span class="i-label" >专辑: </span>
+        <span @click="_handleGo" class="i-content">{{currentSong.albumName}}</span>
       </p>
       <p class='d-singer'>
         <span class="i-label">歌手: </span>
@@ -32,7 +32,7 @@
 
 <script>
 import { getSongLyric } from '@/api'
-import { mapState } from '@/store/helper/music'
+import { mapState, mapMutations } from '@/store/helper/music'
 import BScroll from '@better-scroll/core'
 import MouseWheel from "@better-scroll/mouse-wheel"
 import ScrollBar from "@better-scroll/scroll-bar"
@@ -66,6 +66,7 @@ export default {
   mounted() {
   },
   methods: {
+    ...mapMutations(['setPlayPanelState']),
     async _getSongLyric() {
       let result = await getSongLyric({ id: this.id })
       if (!result.lrc) {
@@ -73,6 +74,14 @@ export default {
       } else {
         this.lyricDetail = this._parseLyric(result.lrc.lyric)
       }
+    },
+    _handleGo() {
+      const route = this.$route
+      console.log(route)
+      if (route.name !== 'songsheet' || route.params.id != this.currentSong.albumId) {
+        this.$router.push(`/songsheet/${this.currentSong.albumId}?type=album`)  
+      }
+      this.setPlayPanelState(false)
     },
     _parseLyric(lyric) {
         lyric = lyric.split('\n')
@@ -170,6 +179,7 @@ export default {
     }
     .d-album{
       width: 170px;
+      cursor: pointer;
       @include limit-line(1);
     }
     .d-singer{

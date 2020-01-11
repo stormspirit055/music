@@ -32,11 +32,20 @@
       :visible.sync="isShowLogin"
       :width="$utils.toRem(300)"
       :before-close="handleClose">
-      <el-input class='el-input-login'  placeholder="请输入账号" v-model="phone">
+
+      <el-input v-show='isIdLogin' class='el-input-login'  placeholder="请输入网易云id" v-model="account">
       </el-input>
-      <el-input class='el-input-login' type='password'  placeholder="请输入密码" v-model="password">
+      <el-input v-show='!isIdLogin' class='el-input-login'  placeholder="请输入11位手机号" v-model="phone">
       </el-input>
-      <el-button class='login-btn' @click="_doLogin" :loading="loading">登 录</el-button>
+      <el-input v-show='!isIdLogin' class='el-input-login' type='password'  placeholder="请输入密码" v-model="password">
+      </el-input>
+      <div class='switch' @click='switchType'>切换登录方式</div>
+      <ul class='desc' v-show='isIdLogin'>
+        <li>1. 你也可以用网易云id方式登录, 体验下有部分bug的版本(部分接口必须用户登录才能调用))</li>
+        <li>2. 点击<a href="http://music.163.com" target="_blank">网易云</a>进入官网</li>
+        <li>3. 点进头像进入主页, 复制url后中 /user/hone?id= 后面的数字即可</li>
+      </ul>
+      <el-button class='login-btn'  @click="_doLogin" :loading="loading">登 录</el-button>
     </el-dialog>
   </div>
 </template>
@@ -44,6 +53,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations, mapState } from '@/store/helper/user'
 import { login, getUserDetail } from '@/api'
+import { Notification } from 'element-ui'
 import { confirm } from '@/base/confirm'
 import storage from 'good-storage'
 export default {
@@ -53,7 +63,9 @@ export default {
       phone: '',
       isVaild: !1,
       loading: !1,
-      infoVisible: !1
+      infoVisible: !1,
+      account: '',
+      isIdLogin: false
     };
   },
   components: {},
@@ -75,6 +87,9 @@ export default {
       'getUserDetail',
       'logout',
     ]),
+    switchType() {
+      this.isIdLogin = !this.isIdLogin
+    },
     ...mapMutations(['setLoginState']),
     _handleTriggerLogin() {
       this.setLoginState(true)
@@ -83,21 +98,32 @@ export default {
       this.setLoginState(false)
     },
     _doLogin() {
-      this.loading = !0
-      login({phone: this.phone, password: this.password}).then(res => {
-        storage.set('U_ID', res.account.id)
-        this.getUserDetail(res.account.id) && this.handleClose()
-      }).finally(() => { 
-        this.loading = !1
-      })
-      // storage.set('U_ID', this.account)
-      // this.getUserDetail(this.account) && this.handleClose()
+      if (this.isIdLogin) {
+        this.getUserDetail(this.account) && this.handleClose()
+      } else {
+        this.loading = !0
+        login({phone: this.phone, password: this.password}).then(res => {
+          if (res) {
+            this.getUserDetail(res.account.id) && this.handleClose()
+          } else {
+            Notification({
+              title: '提示',
+              message: '登录失败, 请输入正确的账号',
+              type: 'error'
+            })
+            return
+          }
+        }).finally(() => { 
+          this.loading = !1
+        })
+      }
+      
     },
     _handleLogout() {
       confirm('确定注销账号?', () => {
         this.logout()
         this.infoVisible = !1
-        this.$router.push('/')
+        // this.$router.push('/')
       })
     }
   },
@@ -117,6 +143,10 @@ export default {
   .login-btn{
     margin-top: 10px;
     width: 100%;
+    background: #ddd;
+    &.active{
+      background: $red !important;
+    }
   }
   .w-box{
     display: flex;
@@ -185,6 +215,18 @@ export default {
       }
     }
   }
-  
+  .switch{
+    color: $red;
+    font-size: $font-size-sm;
+    margin: 5px 0;
+  }
+  .desc{
+    li{
+      margin: 5px 0;
+    }
+    a{
+      color: $red;
+    }
+  }
 }
 </style>

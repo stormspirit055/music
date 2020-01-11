@@ -58,9 +58,9 @@
         label="专辑名称"
       >
         <template slot-scope='scope'>
-          <div class='c-limit'>
+          <router-link tag='div' :to='"/songsheet/" + scope.row.albumId + "?type=album" ' class='c-limit'>
             <span class='c-pointer'><Highlight :keywords='keywords' :text='scope.row.albumName' /></span>
-          </div>
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column

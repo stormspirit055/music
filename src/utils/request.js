@@ -1,9 +1,7 @@
 import axios from 'axios'
-import { Notification } from 'element-ui'
 export const request = createBaseInstance()
 function createBaseInstance() {
   const instance = axios.create({
-    // baseURL: '/netease-api',
     baseURL: 'http://47.98.146.129:3000/',
     withCredentials: true
   })
@@ -16,21 +14,15 @@ function createBaseInstance() {
     if (data.status === 200 && data.data.code == 200) {
       return Promise.resolve(data.data)
     } else {
-      Notification({
-        title: '提示',
-        message: data.data.message,
-        type: 'error'
-      })
+      console.log(data)
+      // Notification({
+      //   title: '提示',
+      //   message: data.data.message,
+      //   type: 'error'
+      // })
     }
   }, error => {
-    console.log(error.response)
-    if (error.response.status !== 301) {
-      Notification({
-        title: '提示',
-        message: error.response.data.msg ||  error.response.data.message,
-        type: 'error'
-      })
-    }
+    console.error(error.response)
   })
   return instance
 }
