@@ -20,6 +20,11 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
   },
   module: {
     rules: [
+      // 自己编写一个loader, 打包时,将baseurl换成线上地址
+      {
+        test: /\request.js$/,
+        use: [resolve('loaders/baseurlLoader.js')]
+      },
       {
         test: /\.css$/i,
         //style-loader 将生成的css 内容挂载到页面的head部分, 用MiniCssExtractPlugin.loader 代替style-loader 用于css代码分割 
