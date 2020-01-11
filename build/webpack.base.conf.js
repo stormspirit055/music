@@ -12,7 +12,6 @@ module.exports = {
   entry: resolve('src/main.js'),
   output: {
     path: resolve('dist'),
-    //将打包后分割的js文件统一输出到dist/js 目录下
     filename: '[name]_[hash].bundle.js',
     chunkFilename: '[name].js'
   },
@@ -52,7 +51,8 @@ module.exports = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
-          name: 'vendors'
+          name: 'vendors',
+          minChunks: 10
         }
       }
     }

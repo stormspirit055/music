@@ -2,7 +2,6 @@ const merge = require('webpack-merge')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const baseWebpackConfig = require('./webpack.base.conf')
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const path = require('path')
@@ -22,8 +21,8 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
     rules: [
       // 自己编写一个loader, 打包时,将baseurl换成线上地址
       {
-        test: /\request.js$/,
-        use: [resolve('loaders/baseurlLoader.js')]
+        test: /request.js$/,
+        use: [resolve('build/loaders/baseurlLoader.js')]
       },
       {
         test: /\.css$/i,
