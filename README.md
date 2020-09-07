@@ -2,8 +2,6 @@
 ---
 #### 前言
 ---
-* 在写该项目之前, 参考了[ssh大佬的音乐项目](https://github.com/sl1673495/vue-netease-music)([掘金地址](https://juejin.im/post/5d3c0765f265da1b60294b78)), 因为了解到ssh效力于国内著名大厂,所以本着学习的态度在动手之前将其音乐项目的**基础架构**及**代码风格**研究了一遍(确实收获了很多)
-
 * 感谢[大佬提供的api](https://github.com/Binaryify/NeteaseCloudMusicApi)
 #### 项目简介
 ---
