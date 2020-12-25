@@ -4,6 +4,7 @@
 </template>
 
 <script>
+// import xgPlayer from 'xgplayer'
 let xyPlayer 
 import(/* webpackPrefetch:true */'xgplayer').then((module) => {
   xyPlayer = module.default;

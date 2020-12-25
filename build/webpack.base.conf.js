@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require('webpack')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -29,6 +30,20 @@ module.exports = {
       /moment[/\\]locale$/,
       /zh-cn/,
     ),
+    // 压缩代码
+    new ParallelUglifyPlugin({
+      cacheDir: '.cache/',
+      uglifyJS:{
+        output: {
+          comments: false
+        },
+        warnings: false,
+        compress: {
+          drop_debugger: true, // 去除生产环境的 debugger 和 console.log
+          drop_console: true
+        }
+      }
+    }),
   ],
   resolve: {
     extensions: ['.js', '.vue', '.scss', '.css'],

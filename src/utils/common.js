@@ -4,7 +4,7 @@ export function isDef(v) {
 export function generateImgurl(url , w, h) {
   if (!h) h = w
   if (url) {
-    return `${url}?imageView=1&thumbnail=${w}z${h}&type=webp&quality=80`
+    return `${url}?imageView=1&thumbnail=${w}z${h}&type=webp&quality=50`
   } else {
     return ''
   }

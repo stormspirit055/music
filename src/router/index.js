@@ -1,30 +1,47 @@
 import storage from 'good-storage'
 import Router from 'vue-router'
 import Vue from 'vue'
-import Discoveryindex from '@/view/discovery'
-import Videoindex from '@/view/videos'
+// const Discoveryindex = () => import(/* webpackChunkName: "index1" */ '@/view/discovery')
+const SongSheet = () => import(/* webpackChunkName: "index" */ '@/view/songsheet')
+const SearchPage = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage')
+const Mvdetail = () => import(/* webpackChunkName: "Mvlist" */ '@/view/mvdetail')
+// const Discovery = () => import(/* webpackChunkName: "index" */ '@/view/discovery/recommend')
+const Videolist = () => import(/* webpackChunkName: "videoList" */ '@/view/videos/mvlist')
+const Mvlist = () => import(/* webpackChunkName: "Mvlist" */ '@/view/videos/mvlist')
+const Videoindex = () => import(/* webpackChunkName: "videoList" */ '@/view/videos')
+const searchSongs = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/songs')
+const searchAlbums = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/albums')
+const searchMvs = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/mvs')
+const searchArtists = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/artists')
+const searchRadios = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/artists')
+const searchUsers = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/users')
+const searchSongsheet = () => import(/* webpackChunkName: "SearchPage" */ '@/view/searchpage/songsheet')
+const DiscSongsheet = () => import(/* webpackChunkName: "Disc" */ '@/view/discovery/songsheet')
+const DiscNewmusic = () => import(/* webpackChunkName: "Disc" */ '@/view/discovery/newmusic')
+const DiscRank = () => import(/* webpackChunkName: "Disc" */ '@/view/discovery/rank')
+import Discoveryindex from '@/view/discovery' 
+// import Videoindex from '@/view/videos'
 import Discovery from '@/view/discovery/recommend'
-import Fm from '@/view/fm'
-import Videolist from '@/view/videos/videolist'
-import Mvlist from '@/view/videos/mvlist'
-import SongSheet from '@/view/songsheet'
-import SearchPage from '@/view/searchpage'
-import Timeline from '@/view/timeline'
-import Mvdetail from '@/view/mvdetail'
-import searchSongs from '@/view/searchpage/songs'
-import searchAlbums from '@/view/searchpage/albums'
-import searchMvs from '@/view/searchpage/mvs'
-import searchArtists from '@/view/searchpage/artists'
-import searchRadios from '@/view/searchpage/radios'
-import searchUsers from '@/view/searchpage/users'
-import searchSongsheet from '@/view/searchpage/songsheet'
+// import Videolist from '@/view/videos/videolist'
+// import Mvlist from '@/view/videos/mvlist'
+// import SongSheet from '@/view/songsheet'
+// import SearchPage from '@/view/searchpage'
+// import Mvdetail from '@/view/mvdetail'
+// import searchSongs from '@/view/searchpage/songs'
+// import searchAlbums from '@/view/searchpage/albums'
+// import searchMvs from '@/view/searchpage/mvs'
+// import searchArtists from '@/view/searchpage/artists'
+// import searchRadios from '@/view/searchpage/radios'
+// import searchUsers from '@/view/searchpage/users'
+// import searchSongsheet from '@/view/searchpage/songsheet'
 
-import DiscSongsheet from '@/view/discovery/songsheet'
-import DiscNewmusic from '@/view/discovery/newmusic'
-import DiscRadios from '@/view/discovery/radios'
-import DiscRank from '@/view/discovery/rank'
-import DiscSinger from '@/view/discovery/singer'
+// import DiscSongsheet from '@/view/discovery/songsheet'
+// import DiscNewmusic from '@/view/discovery/newmusic'
+// import DiscRank from '@/view/discovery/rank'
 import  store  from '@/store'
+
+
+
 Vue.use(Router)
 export const menuRoutes = [
   {

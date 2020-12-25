@@ -45,8 +45,8 @@ export default {
     })
   },
 }
- function formatDate (date, format = 'yyyy-MM-DD hh:mm:ss') {
-   if (!date) return ''
+function formatDate (date, format = 'yyyy-MM-DD hh:mm:ss') {
+  if (!date) return ''
   if (/(y+)/.test(format)) {
     format = format.replace(RegExp.$1, new Date(date).getFullYear())
   }
@@ -63,9 +63,9 @@ export default {
       format = format.replace(RegExp.$1, RegExp.$1.length > str.length ? padLeftZero(str) : str)
     }
   }
+  function padLeftZero (str) {
+    return ('00' + str).substr(str.length)
+  };
   return format
 }
 // 对于月、天、时、分、秒不够两位的在左侧补充0
-function padLeftZero (str) {
-  return ('00' + str).substr(str.length)
-};

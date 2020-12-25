@@ -35,6 +35,7 @@ import { mapActions, mapState } from '@/store/helper/music'
 export default {
   data () {
     return {
+      a: '',
       songList: [
       ]
     };
@@ -70,7 +71,10 @@ export default {
     ...mapActions(['startSong']),
     async _handlePlay(song) {
       // let result = await getSongDetail({ids: song.id })
-      this.startSong(song)
+      // this.startSong(song)
+      import('./click').then(({ default: click }) => {
+        click(this.startSong, song)
+      })
     }
   },
   components: {

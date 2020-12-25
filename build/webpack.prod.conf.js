@@ -1,9 +1,9 @@
 const merge = require('webpack-merge')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const baseWebpackConfig = require('./webpack.base.conf')
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -61,33 +61,20 @@ const prodWebpackConfig = merge(baseWebpackConfig, {
       chunkFilename: '[name]_[hash:8].css',
       filename: '[name]_[hash:8].css'
     }),
-    // gzip 服务端也能进行压缩, 但是如果客户端直接把压缩好的gzip文件传到服务端 可以节省服务端在收到请求后对文件进行的压缩的性能损耗
+    // // gzip 服务端也能进行压缩, 但是如果客户端直接把压缩好的gzip文件传到服务端 可以节省服务端在收到请求后对文件进行的压缩的性能损耗
     new CompressionWebpackPlugin({
       algorithm: 'gzip',
       test: /\.js(\?.*)?$/i,
       threshold: 10240,
       minRatio: 0.8
     }),
-    // 压缩代码
-    new ParallelUglifyPlugin({
-      cacheDir: '.cache/',
-      uglifyJS:{
-        output: {
-          comments: false
-        },
-        warnings: false,
-        compress: {
-          drop_debugger: true, // 去除生产环境的 debugger 和 console.log
-          drop_console: true
-        }
-      }
-    }),
+    
     // 打包分析
     // new BundleAnalyzerPlugin(
     //   {
     //     analyzerMode: 'server',
     //     analyzerHost: '127.0.0.1',
-    //     analyzerPort: 8888,
+    //     analyzerPort: 9999,
     //     reportFilename: 'report.html',
     //     defaultSizes: 'parsed',
     //     openAnalyzer: true,
